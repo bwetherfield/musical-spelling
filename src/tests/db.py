@@ -6,14 +6,14 @@ class TestDb(unittest.TestCase):
     """Db test class"""
 
     def setUp(self):
-        myDb = Db()
+        self.myDb = Db()
 
     def tearDown(self):
-        del myDb
+        del self.myDb
 
     def test_insertTable(self):
-        myDb.tables['test'] = dict(id='int')
-        self.assertEqual(len(myDb.tables), 1)
+        self.myDb.tables['test'] = dict(id='int')
+        self.assertEqual(len(self.myDb.tables), 1)
 
 if __name__ == "__main__":
     unittest.main()
