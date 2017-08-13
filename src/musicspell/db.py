@@ -6,6 +6,7 @@ class Db():
 
     def __init__(self):
         """TODO: to be defined1. """
-        _conn = sqlite3.connect('default.db')
-        _c = _conn.cursor()
+        # self_conn = sqlite3.connect('default.db')
+        # self._c = _conn.cursor()
+        self.tables = {}
 

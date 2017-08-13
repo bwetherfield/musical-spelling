@@ -1,4 +1,4 @@
-from ..musicspell import db
+from musicspell.db import Db
 import unittest
 
 class TestDb(unittest.TestCase):
@@ -6,17 +6,15 @@ class TestDb(unittest.TestCase):
     """Db test class"""
 
     def setUp(self):
-        myDb = db.Db()
+        pass
 
     def tearDown(self):
-        del myDb
+        pass
 
     def test_setattr(self):
-        # myDb.addTable("testTable")
-        # tables = myDb.getTables()
-        # self.assertEqual(tables,("testTable",))
-        myDb.testTable = dict("id"="int")
-        self.assertEqual(myDb.testTable,(id,))
+        myDb = Db()
+        myDb.tables['test'] = dict(id='int')
+        self.assertEqual(len(myDb.tables), 1)
 
 if __name__ == "__main__":
     unittest.main()
