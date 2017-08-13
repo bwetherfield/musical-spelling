@@ -6,13 +6,12 @@ class TestDb(unittest.TestCase):
     """Db test class"""
 
     def setUp(self):
-        pass
+        myDb = Db()
 
     def tearDown(self):
-        pass
+        del myDb
 
-    def test_setattr(self):
-        myDb = Db()
+    def test_insertTable(self):
         myDb.tables['test'] = dict(id='int')
         self.assertEqual(len(myDb.tables), 1)
 
