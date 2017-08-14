@@ -16,4 +16,7 @@ class Db():
 
         """
         if tbl in self.tables:
-            return True
+            for k in kwargs:
+                if k not in self.tables[tbl]:
+                    return False
+                else: return True
