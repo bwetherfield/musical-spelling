@@ -23,5 +23,9 @@ class TestDb(unittest.TestCase):
         b = self.myDb.insert('nonTable',id=1)
         self.assertFalse(b)
 
+    def test_insertEltBadColumn(self):
+        b = self.myDb.insert('test',nonColumn=1)
+        self.assertFalse(b)
+
 if __name__ == "__main__":
     unittest.main()
