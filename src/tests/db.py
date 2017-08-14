@@ -27,5 +27,8 @@ class TestDb(unittest.TestCase):
         b = self.myDb.insert('test',nonColumn=1)
         self.assertFalse(b)
 
+    def test_retrieveBadTable(self):
+        self.assertRaises(KeyError, self.myDb.retrieve, 'nonTable')
+
 if __name__ == "__main__":
     unittest.main()
