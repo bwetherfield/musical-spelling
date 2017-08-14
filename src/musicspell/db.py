@@ -1,6 +1,6 @@
 import sqlite3
 
-class Db():
+class Db(dict):
 
     """database handler"""
 
@@ -8,15 +8,15 @@ class Db():
         """TODO: to be defined1. """
         # self_conn = sqlite3.connect('default.db')
         # self._c = _conn.cursor()
-        self.tables = {}
+        # self.tables = {}
 
     def insert(self, tbl, **kwargs):
         """TODO: Docstring for insert.
         :returns: TODO
 
         """
-        if tbl in self.tables:
+        if tbl in self:
             for k in kwargs:
-                if k not in self.tables[tbl]:
+                if k not in self[tbl]:
                     return False
                 else: return True
