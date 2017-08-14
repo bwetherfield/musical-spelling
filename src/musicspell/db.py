@@ -10,7 +10,7 @@ class Db(dict):
         # self._c = _conn.cursor()
 
     def insert(self, tbl, **kwargs):
-        """TODO: Docstring for insert.
+        """create / insert row into database
         :returns: TODO """
         if tbl in self:
             for k in kwargs:
@@ -19,19 +19,19 @@ class Db(dict):
                 else: return True
 
     def retrieve(self, tbl, *conditions):
-        """TODO: Docstring for insert.
+        """retrieve row from database
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
 
     def amend(self, tbl, *conditions, **kwargs):
-        """TODO: Docstring for insert.
+        """amend / update row in database
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
 
     def delete(self, tbl, *conditions):
-        """TODO: Docstring for insert.
+        """delete row from database
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
