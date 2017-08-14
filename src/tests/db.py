@@ -7,12 +7,12 @@ class TestDb(unittest.TestCase):
 
     def setUp(self):
         self.myDb = Db()
+        self.myDb.tables['test'] = dict(id='int')
 
     def tearDown(self):
         del self.myDb
 
     def test_insertTable(self):
-        self.myDb.tables['test'] = dict(id='int')
         self.assertEqual(len(self.myDb.tables), 1)
 
 if __name__ == "__main__":
