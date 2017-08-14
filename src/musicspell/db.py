@@ -8,7 +8,6 @@ class Db(dict):
         """TODO: to be defined1. """
         # self_conn = sqlite3.connect('default.db')
         # self._c = _conn.cursor()
-        # self.tables = {}
 
     def insert(self, tbl, **kwargs):
         """TODO: Docstring for insert.
@@ -20,3 +19,10 @@ class Db(dict):
                 if k not in self[tbl]:
                     return False
                 else: return True
+
+    def __setitem__(self, k, w):
+        """TODO: Docstring for __setitem__.
+        :returns: TODO
+
+        """
+        super().__setitem__(k, w)
