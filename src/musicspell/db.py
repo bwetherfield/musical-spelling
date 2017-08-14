@@ -11,14 +11,18 @@ class Db(dict):
 
     def insert(self, tbl, **kwargs):
         """TODO: Docstring for insert.
-        :returns: TODO
-
-        """
+        :returns: TODO """
         if tbl in self:
             for k in kwargs:
                 if k not in self[tbl]:
                     return False
                 else: return True
+
+    def retrieve(self, tbl, *conditions):
+        """TODO: Docstring for insert.
+        :returns: TODO """
+        if tbl not in self:
+            raise KeyError('{} not in database'.format(tbl))
 
     def __setitem__(self, k, w):
         """TODO: Docstring for __setitem__.
