@@ -10,3 +10,10 @@ class Db():
         # self._c = _conn.cursor()
         self.tables = {}
 
+    def insert(self, tbl, **kwargs):
+        """TODO: Docstring for insert.
+        :returns: TODO
+
+        """
+        if tbl in self.tables:
+            return True
