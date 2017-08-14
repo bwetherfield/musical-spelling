@@ -24,6 +24,12 @@ class Db(dict):
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
 
+    def amend(self, tbl, *conditions, **kwargs):
+        """TODO: Docstring for insert.
+        :returns: TODO """
+        if tbl not in self:
+            raise KeyError('{} not in database'.format(tbl))
+
     def delete(self, tbl, *conditions):
         """TODO: Docstring for insert.
         :returns: TODO """
