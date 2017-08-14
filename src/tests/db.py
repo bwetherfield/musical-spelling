@@ -30,5 +30,8 @@ class TestDb(unittest.TestCase):
     def test_retrieveBadTable(self):
         self.assertRaises(KeyError, self.myDb.retrieve, 'nonTable')
 
+    def test_deleteEltBadTable(self):
+        self.assertRaises(KeyError, self.myDb.delete, 'nonTable')
+
 if __name__ == "__main__":
     unittest.main()
