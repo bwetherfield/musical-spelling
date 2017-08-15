@@ -15,7 +15,7 @@ class Db(dict):
         if tbl in self:
             for k in kwargs:
                 if k not in self[tbl]:
-                    return False
+                    raise KeyError('{} not in table {}'.format(k, tbl))
                 else: return True
         else: raise KeyError('{} not in database'.format(tbl))
 
