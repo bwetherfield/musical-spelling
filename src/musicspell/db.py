@@ -9,7 +9,6 @@ class Db(dict):
         self._name = name + '.db'
         self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
-        pass
 
     def insert(self, tbl, **kwargs):
         """create / insert row into database
