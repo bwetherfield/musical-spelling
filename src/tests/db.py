@@ -20,8 +20,7 @@ class TestDb(unittest.TestCase):
         self.assertTrue(b)
 
     def test_insertEltBadTable(self):
-        b = self.myDb.insert('nonTable',id=1)
-        self.assertFalse(b)
+        self.assertRaises(KeyError, self.myDb.insert, 'nonTable', id=2)
 
     def test_insertEltBadColumn(self):
         b = self.myDb.insert('test',nonColumn=1)
