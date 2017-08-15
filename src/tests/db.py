@@ -12,6 +12,10 @@ class TestDb(unittest.TestCase):
     def tearDown(self):
         del self.myDb
 
+    def test_namedDatabase(self):
+        self.namedDb = Db('named')
+        self.AssertIs(type(myDb), type(namedDb))
+
     def test_insertTable(self):
         self.assertEqual(len(self.myDb), 1)
 
