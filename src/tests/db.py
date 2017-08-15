@@ -31,6 +31,11 @@ class TestDb(unittest.TestCase):
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
 
+    def test_amendElt(self):
+        self.myDb.insert('test', id=1)
+        self.myDb.amend('test', "id = 1", id=2)
+        self.assertEqual(len(self.myDb.retrieve('test', "id = 1")), 0)
+
     def test_deleteEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.delete, 'nonTable')
 
