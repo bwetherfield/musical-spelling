@@ -23,8 +23,7 @@ class TestDb(unittest.TestCase):
         self.assertRaises(KeyError, self.myDb.insert, 'nonTable', id=2)
 
     def test_insertEltBadColumn(self):
-        b = self.myDb.insert('test',nonColumn=1)
-        self.assertFalse(b)
+        self.assertRaises(KeyError, self.myDb.insert, 'test', nonColumn=2)
 
     def test_retrieveBadTable(self):
         self.assertRaises(KeyError, self.myDb.retrieve, 'nonTable')
