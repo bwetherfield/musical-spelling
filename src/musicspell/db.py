@@ -6,8 +6,8 @@ class Db(dict):
 
     def __init__(self):
         """TODO: to be defined1. """
-        # self._conn = sqlite3.connect('default.db')
-        # self._c = _conn.cursor()
+        self._conn = sqlite3.connect('default.db')
+        self._c = self._conn.cursor()
         pass
 
     def insert(self, tbl, **kwargs):
@@ -48,7 +48,8 @@ class Db(dict):
             raise TypeError('Table must be of type dict')
         super().__setitem__(k, w)
 
-    # def __del__(self):
-    #     """TODO: to be defined1. """
-    #     self._conn.close()
+    def __del__(self):
+        """TODO: to be defined1. """
+        self._conn.commit()
+        self._conn.close()
 
