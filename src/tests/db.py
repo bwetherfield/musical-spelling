@@ -15,6 +15,9 @@ class TestDb(unittest.TestCase):
     def test_insertTable(self):
         self.assertEqual(len(self.myDb), 1)
 
+    def test_insertTableNonDict(self):
+        self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
+
     def test_insertElt(self):
         b = self.myDb.insert('test',id=1)
         self.assertTrue(b)

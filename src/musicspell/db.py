@@ -6,8 +6,9 @@ class Db(dict):
 
     def __init__(self):
         """TODO: to be defined1. """
-        self._conn = sqlite3.connect('default.db')
-        self._c = _conn.cursor()
+        # self._conn = sqlite3.connect('default.db')
+        # self._c = _conn.cursor()
+        pass
 
     def insert(self, tbl, **kwargs):
         """create / insert row into database
@@ -43,10 +44,11 @@ class Db(dict):
         :returns: TODO
 
         """
+        # if not (isinstance(w, dict)):
+        #     raise TypeError('Table must be of type dict')
         super().__setitem__(k, w)
 
-    def __del__(self):
-        """TODO: to be defined1. """
-        self._conn = sqlite3.connect('default.db')
-        self._c = _conn.cursor()
+    # def __del__(self):
+    #     """TODO: to be defined1. """
+    #     self._conn.close()
 
