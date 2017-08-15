@@ -17,6 +17,7 @@ class Db(dict):
                 if k not in self[tbl]:
                     return False
                 else: return True
+        else: raise KeyError('{} not in database'.format(tbl))
 
     def retrieve(self, tbl, *conditions):
         """retrieve row from database
