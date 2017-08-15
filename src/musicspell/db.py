@@ -24,6 +24,7 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
+        return {}
 
     def amend(self, tbl, *conditions, **kwargs):
         """amend / update row in database
