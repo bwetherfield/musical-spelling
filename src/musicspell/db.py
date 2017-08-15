@@ -6,8 +6,8 @@ class Db(dict):
 
     def __init__(self):
         """TODO: to be defined1. """
-        # self_conn = sqlite3.connect('default.db')
-        # self._c = _conn.cursor()
+        self._conn = sqlite3.connect('default.db')
+        self._c = _conn.cursor()
 
     def insert(self, tbl, **kwargs):
         """create / insert row into database
@@ -44,3 +44,9 @@ class Db(dict):
 
         """
         super().__setitem__(k, w)
+
+    def __del__(self):
+        """TODO: to be defined1. """
+        self._conn = sqlite3.connect('default.db')
+        self._c = _conn.cursor()
+
