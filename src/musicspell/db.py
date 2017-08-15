@@ -44,8 +44,8 @@ class Db(dict):
         :returns: TODO
 
         """
-        # if not (isinstance(w, dict)):
-        #     raise TypeError('Table must be of type dict')
+        if not (isinstance(w, dict)):
+            raise TypeError('Table must be of type dict')
         super().__setitem__(k, w)
 
     # def __del__(self):
