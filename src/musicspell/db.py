@@ -4,9 +4,10 @@ class Db(dict):
 
     """database handler"""
 
-    def __init__(self):
+    def __init__(self, name = 'default'):
         """TODO: to be defined1. """
-        self._conn = sqlite3.connect('default.db')
+        self._name = name + '.db'
+        self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
         pass
 
