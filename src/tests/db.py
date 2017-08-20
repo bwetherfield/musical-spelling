@@ -16,6 +16,7 @@ class TestDb(unittest.TestCase):
 
     def test_loadDatabase(self):
         _tempCon = sqlite3.connect('load.db')
+        _tempCon.execute('DROP TABLE if exists testTable')
         _tempCon.execute('CREATE TABLE testTable(id int)')
         _tempCon.commit()
         _tempCon.close()
