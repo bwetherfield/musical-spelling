@@ -10,17 +10,19 @@ class TestDb(unittest.TestCase):
     def setUp(self):
         self.myDb = Db()
         self.myDb['test'] = dict(id='int')
-
-    def tearDown(self):
-        del self.myDb
-
-    def test_loadDatabase(self):
+        # loaded db
         _tempCon = sqlite3.connect('load.db')
         _tempCon.execute('DROP TABLE if exists testTable')
         _tempCon.execute('CREATE TABLE testTable(id int)')
         _tempCon.commit()
         _tempCon.close()
         self.loadedDb = Db('load')
+
+    def tearDown(self):
+        del self.myDb
+        del self.loadedDb
+
+    def test_loadDatabase(self):
         self.assertIn('testTable', self.loadedDb)
 
     def test_namedDatabase(self):
