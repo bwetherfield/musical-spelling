@@ -28,6 +28,10 @@ class TestDb(unittest.TestCase):
         self.assertIn('testTable', self.loadedDb)
         self.assertIn('testTable2', self.loadedDb)
 
+    def test_loadDatabaseCheckColumns(self):
+        self.assertIn('id', self.loadedDb['testTable'].keys())
+        self.assertEqual('int', self.loadedDb['testTable']['id'])
+
     def test_namedDatabase(self):
         self.namedDb = Db('named')
         self.assertIs(type(self.myDb), type(self.namedDb))
