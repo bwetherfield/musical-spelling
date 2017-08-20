@@ -10,6 +10,13 @@ class Db(dict):
         self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
 
+        # for existing database, repopulate tables
+        self._c.row_factory = sqlite3.Row
+        self._c.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        row = self._c.fetchone()
+        if row is not None:
+            self[row[0]] = dict(id='int')
+
     def insert(self, tbl, **kwargs):
         """create / insert row into database
         :returns: TODO """
