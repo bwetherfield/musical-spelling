@@ -1,6 +1,8 @@
 from musicspell.db import Db
 import unittest
 
+import sqlite3
+
 class TestDb(unittest.TestCase):
 
     """Db test class"""
@@ -11,6 +13,14 @@ class TestDb(unittest.TestCase):
 
     def tearDown(self):
         del self.myDb
+
+    def test_loadDatabase(self):
+        _tempCon = sqlite3.connect('load.db')
+        _tempCon.execute('CREATE TABLE testTable(id int)')
+        _tempCon.commit()
+        _tempCon.close()
+        self.loadedDb = Db('load.db')
+        self.assertIn('testTable', self.loadedDb)
 
     def test_namedDatabase(self):
         self.namedDb = Db('named')
