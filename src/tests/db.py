@@ -19,7 +19,7 @@ class TestDb(unittest.TestCase):
         _tempCon.execute('CREATE TABLE testTable(id int)')
         _tempCon.commit()
         _tempCon.close()
-        self.loadedDb = Db('load.db')
+        self.loadedDb = Db('load')
         self.assertIn('testTable', self.loadedDb)
 
     def test_namedDatabase(self):
