@@ -43,6 +43,7 @@ class TestDb(unittest.TestCase):
     def test_namedDatabase(self):
         self.namedDb = Db('named')
         self.assertIs(type(self.myDb), type(self.namedDb))
+        del self.namedDb
 
     def test_insertTable(self):
         self.assertEqual(len(self.myDb), 1)
