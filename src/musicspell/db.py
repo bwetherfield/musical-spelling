@@ -17,9 +17,10 @@ class Db(dict):
         # None indicates database is new - we are done
         if rows is not None:
             for row in rows:
+                self[row[0]] = {}
                 data = self._c.execute('PRAGMA table_info({})'.format(row[0]))
                 for d in data:
-                    self[row[0]] = { d[1] : d[2] }
+                    self[row[0]].update({ d[1] : d[2] })
 
     def insert(self, tbl, **kwargs):
         """create / insert row into database
