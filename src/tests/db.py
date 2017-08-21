@@ -13,7 +13,7 @@ class TestDb(unittest.TestCase):
         # loaded db
         _tempCon = sqlite3.connect('load.db')
         _tempCon.execute('DROP TABLE if exists testTable')
-        _tempCon.execute('CREATE TABLE testTable(id int)')
+        _tempCon.execute('CREATE TABLE testTable(id int, other text)')
         _tempCon.execute('DROP TABLE if exists testTable2')
         _tempCon.execute('CREATE TABLE testTable2(id int)')
         _tempCon.commit()
@@ -31,6 +31,7 @@ class TestDb(unittest.TestCase):
     def test_loadDatabaseCheckColumns(self):
         self.assertIn('id', self.loadedDb['testTable'].keys())
         self.assertEqual('int', self.loadedDb['testTable']['id'])
+        self.assertEqual('text', self.loadedDb['testTable']['other'])
 
     def test_namedDatabase(self):
         self.namedDb = Db('named')
