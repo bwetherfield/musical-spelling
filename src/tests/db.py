@@ -72,6 +72,8 @@ class TestDb(unittest.TestCase):
     def test_retrieveNoConditions(self):
         rows = self.loadedDb.retrieve('retrieveTester')
         self.assertIsNotNone(rows)
+        for row in rows:
+            self.assertEqual(row[0], 1)
 
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
