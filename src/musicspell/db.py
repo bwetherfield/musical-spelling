@@ -11,7 +11,6 @@ class Db(dict):
         self._c = self._conn.cursor()
 
         # for existing database, repopulate tables
-        self._c.row_factory = sqlite3.Row
         self._c.execute("SELECT name FROM sqlite_master WHERE type='table';")
         rows = self._c.fetchall()
         # None indicates database is new... we are done
