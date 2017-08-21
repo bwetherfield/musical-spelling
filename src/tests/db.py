@@ -19,6 +19,9 @@ class TestDb(unittest.TestCase):
         _tempCon.execute('CREATE TABLE testTable(id int, other text)')
         _tempCon.execute('DROP TABLE if exists testTable2')
         _tempCon.execute('CREATE TABLE testTable2(id int)')
+        _tempCon.execute('DROP TABLE if exists retrieveTester')
+        _tempCon.execute('CREATE TABLE retrieveTester(id int)')
+        _tempCon.execute('INSERT INTO retrieveTester VALUES (1)')
         _tempCon.commit()
         _tempCon.close()
         self.loadedDb = Db('load')
@@ -65,6 +68,14 @@ class TestDb(unittest.TestCase):
 
     def test_retrieveBadTable(self):
         self.assertRaises(KeyError, self.myDb.retrieve, 'nonTable')
+
+    def test_retrieveNoConditions(self):
+        rows = self.loadedDb.retrieve('retrieveTester')
+        flag = False
+        for row in rows:
+            if row[id] == 1:
+                flag = True
+        self.assertTrue(flag)
 
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
