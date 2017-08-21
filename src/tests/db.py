@@ -71,7 +71,7 @@ class TestDb(unittest.TestCase):
 
     def test_retrieveNoConditions(self):
         rows = self.loadedDb.retrieve('retrieveTester')
-        self.assertIsNotNone(rows)
+        self.assertEqual(rows, [(1,)], "{}".format(rows))
         for row in rows:
             self.assertEqual(row[0], 1)
 

@@ -36,7 +36,6 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
-        return {}
         self._c.execute('SELECT * from {}'.format(tbl))
         rows = self._c.fetchall()
         return rows
