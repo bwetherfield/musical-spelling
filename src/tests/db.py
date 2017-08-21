@@ -37,6 +37,9 @@ class TestDb(unittest.TestCase):
         self.assertRaises(KeyError, self.loadedDb['testTable'].__getitem__,
                           'notColumn')
 
+    def test_loadDatabaseColumnBadType(self):
+        self.assertNotEqual('notInt', self.loadedDb['testTable']['id'])
+
     def test_namedDatabase(self):
         self.namedDb = Db('named')
         self.assertIs(type(self.myDb), type(self.namedDb))
