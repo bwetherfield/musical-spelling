@@ -14,7 +14,7 @@ class Db(dict):
         self._c.row_factory = sqlite3.Row
         self._c.execute("SELECT name FROM sqlite_master WHERE type='table';")
         rows = self._c.fetchall()
-        # None indicates database is new - we are done
+        # None indicates database is new... we are done
         if rows is not None:
             for row in rows:
                 self[row[0]] = {}
