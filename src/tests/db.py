@@ -8,8 +8,11 @@ class TestDb(unittest.TestCase):
     """Db test class"""
 
     def setUp(self):
+        #test db
         self.myDb = Db()
         self.myDb['test'] = dict(id='int')
+        # named db
+        self.namedDb = Db('named')
         # loaded db
         _tempCon = sqlite3.connect('load.db')
         _tempCon.execute('DROP TABLE if exists testTable')
@@ -23,6 +26,7 @@ class TestDb(unittest.TestCase):
     def tearDown(self):
         del self.myDb
         del self.loadedDb
+        del self.namedDb
 
     def test_loadDatabaseTableCheck(self):
         self.assertIn('testTable', self.loadedDb)
@@ -41,9 +45,7 @@ class TestDb(unittest.TestCase):
         self.assertNotEqual('notInt', self.loadedDb['testTable']['id'])
 
     def test_namedDatabase(self):
-        self.namedDb = Db('named')
         self.assertIs(type(self.myDb), type(self.namedDb))
-        del self.namedDb
 
     def test_insertTable(self):
         self.assertEqual(len(self.myDb), 1)
