@@ -60,9 +60,14 @@ class Db(dict):
         """
         if not (isinstance(w, dict)):
             raise TypeError('Table must be of type dict')
-        self._c.execute('DROP TABLE IF EXISTS {}'.format(k))
-        self._c.execute('CREATE TABLE {}({})'.format(k, 'id int, other text'))
         super().__setitem__(k, w)
+        if w != {}:
+            self._c.execute('DROP TABLE IF EXISTS {}'.format(k))
+            tmpList = []
+            for wk in w.keys():
+                tmpList.append(' '.join([wk, w[wk]]))
+            s = ','.join(tmpList)
+            self._c.execute('CREATE TABLE {}({})'.format(k, s))
 
     def __del__(self):
         """TODO: to be defined1. """
