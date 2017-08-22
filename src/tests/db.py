@@ -106,7 +106,7 @@ class TestDb(unittest.TestCase):
         # no conditions means delete all
         self.myDb.delete('test')
         rows = self.myDb.retrieve('test')
-        self.assertEqual(len(rows), 0)
+        self.assertIsNone(rows)
 
 if __name__ == "__main__":
     unittest.main()
