@@ -94,7 +94,7 @@ class TestDb(unittest.TestCase):
 
     def test_amendElt(self):
         self.myDb.insert('test', id=1)
-        self.myDb.amend('test', "id = 1", id=2)
+        self.myDb.amend('test', "id == 1", id=2)
         rows = self.myDb.retrieve('test', "id == 1")
         self.assertIsNone(rows)
 
@@ -107,6 +107,15 @@ class TestDb(unittest.TestCase):
         self.myDb.delete('test')
         rows = self.myDb.retrieve('test')
         self.assertIsNone(rows)
+
+    def test_deleteConditional(self):
+        self.myDb.insert('test', id = 200)
+        self.myDb.insert('test', id = 100)
+        self.myDb.delete('test', "id > 150")
+        rows = self.myDb.retrieve('test', "id > 150")
+        self.assertIsNone(rows)
+        rows = self.myDb.retrieve('test', "id <= 150")
+        self.assertIsNotNone(rows)
 
 if __name__ == "__main__":
     unittest.main()
