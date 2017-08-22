@@ -36,9 +36,14 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
-        self._c.execute('SELECT * from {}'.format(tbl))
+        sel = 'SELECT * from {}'.format(tbl)
+        if conditions != []:
+            cond = ' AND '.join(conditions)
+            sel = sel + ' WHERE ' + cond
+        self._c.execute(sel)
         rows = self._c.fetchall()
-        return rows
+        if rows == []: return None
+        else: return rows
 
     def amend(self, tbl, *conditions, **kwargs):
         """amend / update row in database
