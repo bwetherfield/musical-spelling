@@ -67,6 +67,8 @@ class TestDb(unittest.TestCase):
     def test_insertElt(self):
         b = self.myDb.insert('test',id=1)
         self.assertTrue(b)
+        rows = self.myDb.retrieve('test', 'id == 1')
+        self.assertIsNotNone(rows)
 
     def test_insertEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.insert, 'nonTable', id=2)
