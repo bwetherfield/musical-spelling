@@ -1,6 +1,5 @@
 from musicspell.db import Db
 import unittest
-
 import sqlite3
 
 class TestDb(unittest.TestCase):
@@ -51,7 +50,16 @@ class TestDb(unittest.TestCase):
         self.assertIs(type(self.myDb), type(self.namedDb))
 
     def test_insertTable(self):
-        self.assertEqual(len(self.myDb), 1)
+        self.myDb['setTable'] = { 'id' : 'INTEGER', 'other' : 'TEXT' }
+        _tmpCon = sqlite3.connect('default.db')
+        _tmpCur = _tmpCon.cursor()
+        _tmpCur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        rows = _tmpCur.fetchall()
+        flag = False
+        for row in rows:
+            if row[0] == 'setTable':
+                flag = True
+        self.assertTrue(flag)
 
     def test_insertTableNonDict(self):
         self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
@@ -59,6 +67,8 @@ class TestDb(unittest.TestCase):
     def test_insertElt(self):
         b = self.myDb.insert('test',id=1)
         self.assertTrue(b)
+        rows = self.myDb.retrieve('test', 'id == 1')
+        self.assertIsNotNone(rows)
 
     def test_insertEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.insert, 'nonTable', id=2)
@@ -74,6 +84,18 @@ class TestDb(unittest.TestCase):
         self.assertEqual(rows, [(1,)], "{}".format(rows))
         for row in rows:
             self.assertEqual(row[0], 1)
+
+    # def test_setItem(self):
+    #     self.myDb['setTable'] = { 'id' : 'INTEGER', 'other' : 'TEXT' }
+    #     _tmpCon = sqlite3.connect('default.db')
+    #     _tmpCur = _tmpCon.cursor()
+    #     _tmpCur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    #     rows = _tmpCur.fetchall()
+    #     flag = False
+    #     for row in rows:
+    #         if row[0] == 'setTable':
+    #             flag == True
+    #     self.assertTrue(flag)
 
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
