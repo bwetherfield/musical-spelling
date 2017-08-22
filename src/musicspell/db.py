@@ -28,7 +28,20 @@ class Db(dict):
             for k in kwargs:
                 if k not in self[tbl]:
                     raise KeyError('{} not in table {}'.format(k, tbl))
-                else: return True
+                else:
+                    ins = 'INSERT INTO {}'.format(tbl)
+                    klist, wlist, qlist = [], [], []
+                    for k in kwargs.keys():
+                        klist.append(k)
+                        wlist.append(kwargs[k])
+                        qlist.append('?')
+                    ks = ', '.join(klist)
+                    ws = tuple(wlist)
+                    qs = ', '.join(qlist)
+                    ins = ins + '({})'.format(ks) + 'VALUES' + \
+                            '({})'.format(qs)
+                    self._c.execute(ins, ws)
+                    return True
         else: raise KeyError('{} not in database'.format(tbl))
 
     def retrieve(self, tbl, *conditions):
