@@ -5,7 +5,10 @@ class Db(dict):
     """database handler"""
 
     def __init__(self, name = 'default'):
-        """TODO: to be defined1. """
+        """Connect to database with default name default.db
+        
+        Argument: pass in name without .db suffix
+        Reads in table names and columns from pre-existing db automatically"""
         self._name = name + '.db'
         self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
@@ -22,8 +25,7 @@ class Db(dict):
                     self[row[0]].update({ d[1] : d[2] })
 
     def insert(self, tbl, **kwargs):
-        """create / insert row into database
-        :returns: TODO """
+        """Insert row into database"""
         if kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
         if tbl in self:
@@ -47,8 +49,7 @@ class Db(dict):
         else: raise KeyError('{} not in database'.format(tbl))
 
     def retrieve(self, tbl, *conditions):
-        """retrieve row from database
-        :returns: TODO """
+        """select rows that satisfy conditions from database"""
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         sel = 'SELECT * from {}'.format(tbl)
@@ -61,8 +62,7 @@ class Db(dict):
         else: return rows
 
     def amend(self, tbl, *conditions, **kwargs):
-        """amend / update row in database
-        :returns: TODO """
+        """Update contents of rows that satisfy conditions in database"""
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         if kwargs == {}:
@@ -78,11 +78,10 @@ class Db(dict):
             conds = ' WHERE ' + ' AND '.join(conditions)
         else: conds = ''
         upd = upd + ks + conds
-        self._c.execute(upd, ws) 
+        self._c.execute(upd, ws)
 
     def delete(self, tbl, *conditions):
-        """delete rows  that satisfy conditions
-        :returns: TODO """
+        """Delete rows  that satisfy conditions from database"""
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         dels = 'DELETE from {}'.format(tbl)
@@ -92,10 +91,7 @@ class Db(dict):
         self._c.execute(dels)
 
     def __setitem__(self, k, w):
-        """TODO: Docstring for __setitem__.
-        :returns: TODO
-
-        """
+        """Add table to database. Extends dict.__setitem__()"""
         if not (isinstance(w, dict)):
             raise TypeError('Table must be of type dict')
         super().__setitem__(k, w)
@@ -108,7 +104,7 @@ class Db(dict):
             self._c.execute('CREATE TABLE {}({})'.format(k, s))
 
     def __del__(self):
-        """TODO: to be defined1. """
+        """Commit database changes and close database before deletion"""
         self._conn.commit()
         self._conn.close()
 
