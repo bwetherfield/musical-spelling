@@ -81,7 +81,7 @@ class TestDb(unittest.TestCase):
 
     def test_retrieveNoConditions(self):
         rows = self.loadedDb.retrieve('retrieveTester')
-        self.assertEqual(rows, [(1,)], "{}".format(rows))
+        self.assertIsNotNone(rows)
         for row in rows:
             self.assertEqual(row[0], 1)
 
@@ -107,6 +107,13 @@ class TestDb(unittest.TestCase):
 
     def test_deleteEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.delete, 'nonTable')
+
+    def test_deleteAll(self):
+        self.myDb.insert('test', id=300)
+        # no conditions means delete all
+        self.myDb.delete('test')
+        rows = self.myDb.retrieve('test')
+        self.assertEqual(len(rows), 0)
 
 if __name__ == "__main__":
     unittest.main()
