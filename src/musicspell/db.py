@@ -24,6 +24,8 @@ class Db(dict):
     def insert(self, tbl, **kwargs):
         """create / insert row into database
         :returns: TODO """
+        if kwargs == {}:
+            raise ValueError('column, entry pairs needed to amend database')
         if tbl in self:
             for k in kwargs:
                 if k not in self[tbl]:
