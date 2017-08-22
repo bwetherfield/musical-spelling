@@ -69,6 +69,11 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
+        dels = 'DELETE from {}'.format(tbl)
+        if conditions != ():
+            cond = ' AND '.join(conditions)
+            dels = dels + ' WHERE ' + cond
+        self._c.execute(dels)
 
     def __setitem__(self, k, w):
         """TODO: Docstring for __setitem__.
