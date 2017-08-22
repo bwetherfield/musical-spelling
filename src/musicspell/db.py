@@ -63,6 +63,19 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
+        upd = 'UPDATE {}'.format(tbl)
+        ksubs, wlist = [], []
+        for k in kwargs.keys():
+            ksubs.append('{} = ?'.format(k))
+            wlist.append(kwargs[k])
+        ks = ', '.join(ksubs)
+        ks = ' SET ' + ks
+        ws = tuple(wlist)
+        if conditions != ():
+            conds = ' WHERE ' + ' AND '.join(conditions)
+        else: conds = ''
+        upd = upd + ks + conds
+        self._c.execute(upd, ws) 
 
     def delete(self, tbl, *conditions):
         """delete row from database
