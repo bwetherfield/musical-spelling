@@ -92,6 +92,11 @@ class TestDb(unittest.TestCase):
         rows = self.loadedDb.retrieve('retrieveTester', 'id == 4500')
         self.assertIsNone(rows)
 
+    def test_retrieveGoodConditions(self):
+        self.loadedDb.insert('testTable', id = 4500, other = "HELLO")
+        rows = self.loadedDb.retrieve('testTable', "other == 'HELLO'")
+        self.assertIsNotNone(rows)
+
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
 
