@@ -37,7 +37,7 @@ class Db(dict):
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         sel = 'SELECT * from {}'.format(tbl)
-        if conditions != []:
+        if conditions != ():
             cond = ' AND '.join(conditions)
             sel = sel + ' WHERE ' + cond
         self._c.execute(sel)
