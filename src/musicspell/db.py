@@ -68,8 +68,7 @@ class Db(dict):
         for k in kwargs.keys():
             ksubs.append('{} = ?'.format(k))
             wlist.append(kwargs[k])
-        ks = ', '.join(ksubs)
-        ks = ' SET ' + ks
+        ks = ' SET ' + ', '.join(ksubs)
         ws = tuple(wlist)
         if conditions != ():
             conds = ' WHERE ' + ' AND '.join(conditions)
