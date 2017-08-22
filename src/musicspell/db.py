@@ -63,6 +63,8 @@ class Db(dict):
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
+        if kwargs == {}:
+            raise ValueError('column, entry pairs needed to amend database')
         upd = 'UPDATE {}'.format(tbl)
         ksubs, wlist = [], []
         for k in kwargs.keys():
@@ -77,7 +79,7 @@ class Db(dict):
         self._c.execute(upd, ws) 
 
     def delete(self, tbl, *conditions):
-        """delete row from database
+        """delete rows  that satisfy conditions
         :returns: TODO """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
