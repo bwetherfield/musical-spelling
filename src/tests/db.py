@@ -65,9 +65,9 @@ class TestDb(unittest.TestCase):
         self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
 
     def test_insertElt(self):
-        b = self.myDb.insert('test',id=1)
+        b = self.myDb.insert('test',id=200)
         self.assertTrue(b)
-        rows = self.myDb.retrieve('test', 'id == 1')
+        rows = self.myDb.retrieve('test', 'id == 200')
         self.assertIsNotNone(rows)
 
     def test_insertEltBadTable(self):
@@ -84,6 +84,10 @@ class TestDb(unittest.TestCase):
         self.assertIsNotNone(rows)
         for row in rows:
             self.assertEqual(row[0], 1)
+
+    def test_retrieveBadConditions(self):
+        rows = self.loadedDb.retrieve('retrieveTester', 'id == 4500')
+        self.assertIsNone(rows)
 
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
