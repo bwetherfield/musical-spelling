@@ -98,6 +98,9 @@ class TestDb(unittest.TestCase):
         rows = self.myDb.retrieve('test', "id == 1")
         self.assertIsNone(rows)
 
+    def test_amendNoKw(self):
+        self.assertRaises(ValueError, self.myDb.amend, 'test', "id == 1")
+
     def test_deleteEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.delete, 'nonTable')
 
