@@ -50,7 +50,16 @@ class TestDb(unittest.TestCase):
         self.assertIs(type(self.myDb), type(self.namedDb))
 
     def test_insertTable(self):
-        self.assertEqual(len(self.myDb), 1)
+        self.myDb['setTable'] = { 'id' : 'INTEGER', 'other' : 'TEXT' }
+        _tmpCon = sqlite3.connect('default.db')
+        _tmpCur = _tmpCon.cursor()
+        _tmpCur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        rows = _tmpCur.fetchall()
+        flag = False
+        for row in rows:
+            if row[0] == 'setTable':
+                flag = True
+        self.assertTrue(flag)
 
     def test_insertTableNonDict(self):
         self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
@@ -74,17 +83,17 @@ class TestDb(unittest.TestCase):
         for row in rows:
             self.assertEqual(row[0], 1)
 
-    def test_setItem(self):
-        self.myDb['setTable'] = { 'id' : 'INTEGER', 'other' : 'TEXT' }
-        _tmpCon = sqlite3.connect('default.db')
-        _tmpCur = _tmpCon.cursor()
-        _tmpCur.execute("SELECT name FROM sqlite_master WHERE type='table'")
-        rows = _tmpCur.fetchall()
-        flag = False
-        for row in rows:
-            if row[0] == 'setTable':
-                flag == True
-        self.assertTrue(flag)
+    # def test_setItem(self):
+    #     self.myDb['setTable'] = { 'id' : 'INTEGER', 'other' : 'TEXT' }
+    #     _tmpCon = sqlite3.connect('default.db')
+    #     _tmpCur = _tmpCon.cursor()
+    #     _tmpCur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    #     rows = _tmpCur.fetchall()
+    #     flag = False
+    #     for row in rows:
+    #         if row[0] == 'setTable':
+    #             flag == True
+    #     self.assertTrue(flag)
 
     def test_amendEltBadTable(self):
         self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
