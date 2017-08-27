@@ -1,0 +1,58 @@
+from db import Db
+
+class Command:
+
+    """base sql command"""
+
+    self._cmdType = None
+
+    def __init__(self, tbl, *conditions, **kwargs):
+        self.tbl = tbl
+        self.conditions = conditions
+        self.kwargs = kwargs
+        self._data = None
+        self._cmdStr = None
+
+    def errorCheck(self, db=None):
+        if db is None:
+            raise ValueError('Supply a database')
+        elif self.tbl not in db:
+            raise KeyError('{} not in database'.format(tbl))
+
+    def execute(self):
+        raise NotImplementedError
+
+class Insert(Command):
+
+    """concrete sql command INSERT"""
+
+    self._cmdType = "INSERT"
+
+    def getString(self):
+        if self._cmdStr is None:
+            tabStr = 'INTO {}'.format(tbl)
+            klist, wlist, qlist = [], [], []
+            for k in kwargs.keys():
+                klist.append(k)
+                wlist.append(kwargs[k])
+                qlist.append('?')
+            ks = ', '.join(klist)
+            ws = tuple(wlist)
+            qs = ', '.join(qlist)
+            self._cmdStr = tabStr + '({})'.format(ks) + 'VALUES' + \
+                    '({})'.format(qs)
+            self._data = ws
+        return self._cmdStr, self._data
+
+    def errorCheck(self):
+        super.errorCheck()
+        if self.kwargs == {}:
+            raise ValueError('column, entry pairs needed to amend database')
+        for k in kwargs:
+            if k not in db[tbl]:
+                raise KeyError('{} not in table {}'.format(k, tbl))
+
+    def execute(self, db=None):
+        cmd, data = self.getString()
+        cmd = self._cmdType + " " + cmd
+        db._c.execute(cmd, data)
