@@ -24,6 +24,9 @@ class Db(dict):
                 for d in data:
                     self[row[0]].update({ d[1] : d[2] })
 
+    def execute (self, cmd):
+        return cmd.execute(self._c)
+
     def insert(self, tbl, **kwargs):
         """Insert row into database"""
         if kwargs == {}:
