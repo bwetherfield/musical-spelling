@@ -78,3 +78,6 @@ class Select(Command):
         cmd = self.getString()
         cmd = self._cmdType + " " + cmd
         db._c.execute(cmd)
+        rows = db._c.fetchall()
+        if rows == []: return None
+        else: return rows
