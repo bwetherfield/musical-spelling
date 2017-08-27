@@ -6,7 +6,7 @@ class Db(dict):
 
     def __init__(self, name = 'default'):
         """Connect to database with default name default.db
-        
+
         Argument: pass in name without .db suffix
         Reads in table names and columns from pre-existing db automatically"""
         self._name = name + '.db'
