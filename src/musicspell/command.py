@@ -56,3 +56,25 @@ class Insert(Command):
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
         db._c.execute(cmd, data)
+
+class Select(Command):
+
+    """concrete sql command SELECT"""
+
+    self._cmdType = "SELECT"
+
+    def getString(self):
+        if self._cmdStr is None:
+            cmd = '* from {}'.format(tbl)
+            if self.conditions != ():
+                cond = ' AND '.join(self.conditions)
+                self._cmdStr = cmd + ' WHERE ' + cond
+        return self._cmdStr
+
+    def errorCheck(self):
+        super.errorCheck()
+
+    def execute(self, db=None):
+        cmd = self.getString()
+        cmd = self._cmdType + " " + cmd
+        db._c.execute(cmd)
