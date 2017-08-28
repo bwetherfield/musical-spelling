@@ -92,8 +92,6 @@ class TestCommand(unittest.TestCase):
 
     def test_selectNoConditions(self):
         selectNoConditions = Select('selectTester')
-        check = selectNoConditions.getString()
-        self.assertEqual(check, "* from selectTester", check)
         rows = self.loadedDb.execute(selectNoConditions)
         self.assertIsNotNone(rows)
         for row in rows:
