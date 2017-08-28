@@ -101,7 +101,7 @@ class TestDb(unittest.TestCase):
         rows = self.loadedDb.execute(selectBadConditions)
         self.assertIsNone(rows)
 
-    def test_retrieveGoodConditions(self):
+    def test_selectGoodConditions(self):
         self.loadedDb.insert('testTable', id = 4500, other = "HELLO")
         selectGoodConditions = Select('testTable', "other == 'HELLO'")
         rows = self.loadedDb.execute(selectGoodConditions)
