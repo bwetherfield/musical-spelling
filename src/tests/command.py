@@ -97,7 +97,8 @@ class TestDb(unittest.TestCase):
             self.assertEqual(row[0], 1)
 
     def test_retrieveBadConditions(self):
-        rows = self.loadedDb.retrieve('retrieveTester', 'id == 4500')
+        selectBadConditions = Select('selectTester', 'id == 4500')
+        rows = self.loadedDb.execute(selectBadConditions)
         self.assertIsNone(rows)
 
     def test_retrieveGoodConditions(self):
