@@ -21,7 +21,7 @@ class Union(CompositeCommand):
         if self._cmdStr is None:
             cmdList = []
             for c in self.cmds:
-                sc = c._cmdType + " " + c.getString()
+                sc = c.getString()
                 cmdList.append(sc)
             s = ' UNION '.join(cmdList)
             self._cmdStr = s

@@ -58,16 +58,16 @@ class Select(Command):
 
     def getString(self):
         if self._cmdStr is None:
-            cmd = '* from {}'.format(self.tbl)
+            cmd = ' * from {}'.format(self.tbl)
             self._cmdStr = cmd
             if self.conditions != ():
                 cond = ' AND '.join(self.conditions)
                 self._cmdStr = cmd + ' WHERE ' + cond
+            self._cmdStr = self._cmdType + self._cmdStr
         return self._cmdStr
 
     def execute(self, cursor):
         cmd = self.getString()
-        cmd = self._cmdType + " " + cmd
         cursor.execute(cmd)
         rows = cursor.fetchall()
         if rows == []: return None
