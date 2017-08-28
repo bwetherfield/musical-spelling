@@ -13,11 +13,12 @@ class TestCompositeCommand(unittest.TestCase):
         self.unionDb['unionTable'] = dict(id = 'INTEGER')
         self.unionDb['unionTable2'] = dict(id = 'INTEGER')
         rowInsert = Insert('unionTable', id=1)
-        rowInsert = Insert('unionTable2', id=1)
+        rowInsert2 = Insert('unionTable2', id=2)
         self.unionDb.execute(rowInsert)
+        self.unionDb.execute(rowInsert2)
 
     def tearDown(self):
-        pass
+        del self.unionDb
 
     def test_unionNotACommand(self):
         self.assertNotIsInstance(Union(), Command)
@@ -29,11 +30,11 @@ class TestCompositeCommand(unittest.TestCase):
         self.assertIsNotNone(rows)
 
     def test_unionTwoSelect(self):
-        selectOne = Select('unionTable', "id == 1")
-        selectTwo = Select('unionTable2', "id == 1")
+        selectOne = Select('unionTable')
+        selectTwo = Select('unionTable2')
         unionTwoSelect = Union(selectOne, selectTwo)
         rows = self.unionDb.execute(unionTwoSelect)
-        self.assertEqual(len(rows), 2)
+        self.assertEqual(len(rows), 2, msg=unionTwoSelect.getString() )
 
 if __name__ == "__main__":
     unittest.main()
