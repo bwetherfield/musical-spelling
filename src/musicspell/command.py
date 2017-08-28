@@ -111,10 +111,12 @@ class Delete(Command):
     self._cmdType = "DELETE"
 
     def getString(self):
-        return "NOT DONE"
-
-    def errorCheck(self):
-        super.errorCheck()
+        cmd = 'from {}'.format(tbl)
+        if conditions != ():
+            cond = ' AND '.join(conditions)
+            self._cmdStr = cmd + ' WHERE ' + cond
 
     def execute(self, cursor):
-        return
+        cmd = self.getString()
+        cmd = self._cmdType + " " + cmd
+        cursor.execute(cmd)
