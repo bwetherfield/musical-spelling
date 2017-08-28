@@ -129,7 +129,8 @@ class TestDb(unittest.TestCase):
     def test_deleteAll(self):
         self.myDb.insert('test', id=300)
         # no conditions means delete all
-        self.myDb.delete('test')
+        deleteAll = Delete('test')
+        self.myDb.execute(deleteAll)
         rows = self.myDb.retrieve('test')
         self.assertIsNone(rows)
 
