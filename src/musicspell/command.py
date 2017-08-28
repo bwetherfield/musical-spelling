@@ -1,4 +1,4 @@
-from db import Db
+from musicspell.db import Db
 
 class Command:
 
