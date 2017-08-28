@@ -96,14 +96,15 @@ class TestDb(unittest.TestCase):
         for row in rows:
             self.assertEqual(row[0], 1)
 
-    def test_retrieveBadConditions(self):
+    def test_selectBadConditions(self):
         selectBadConditions = Select('selectTester', 'id == 4500')
         rows = self.loadedDb.execute(selectBadConditions)
         self.assertIsNone(rows)
 
     def test_retrieveGoodConditions(self):
         self.loadedDb.insert('testTable', id = 4500, other = "HELLO")
-        rows = self.loadedDb.retrieve('testTable', "other == 'HELLO'")
+        selectGoodConditions = Select('testTable', "other == 'HELLO'")
+        rows = self.loadedDb.execute(selectGoodConditions)
         self.assertIsNotNone(rows)
 
     def test_amendEltBadTable(self):
