@@ -49,7 +49,7 @@ class Insert(Command):
         self.errorCheck()
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
-        db.execute(cmd, data)
+        cursor.execute(cmd, data)
 
 class Select(Command):
 
@@ -68,8 +68,8 @@ class Select(Command):
     def execute(self, cursor):
         cmd = self.getString()
         cmd = self._cmdType + " " + cmd
-        db._c.execute(cmd)
-        rows = db._c.fetchall()
+        cursor.execute(cmd)
+        rows = cursor.fetchall()
         if rows == []: return None
         else: return rows
 
