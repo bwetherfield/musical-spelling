@@ -41,9 +41,6 @@ class Insert(Command):
     def errorCheck(self):
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
-        for k in self.kwargs:
-            if k not in db[self.tbl]:
-                raise KeyError('{} not in table {}'.format(k, self.tbl))
 
     def execute(self, cursor):
         self.errorCheck()
