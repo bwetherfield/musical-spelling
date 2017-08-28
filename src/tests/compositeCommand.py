@@ -1,5 +1,5 @@
 from musicspell.db import Db
-from musicspell.command import Select, Insert
+from musicspell.command import Select, Insert, Command
 from musicspell.compositeCommand import Union
 import unittest
 import sqlite3
@@ -16,6 +16,9 @@ class TestCompositeCommand(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_unionNotACommand(self):
+        self.assertNotIsInstance(Union(), Command)
 
     def test_unionOneSelect(self):
         self.myDb = Db('unionDb')
