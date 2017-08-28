@@ -7,6 +7,8 @@ class Command:
     _cmdType = None
 
     def __init__(self, tbl, *conditions, **kwargs):
+        #hack for Command/CompositeCommand polymorphism
+        self.cmds = [self]
         self.tbl = tbl
         self.conditions = conditions
         self.kwargs = kwargs

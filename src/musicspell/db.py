@@ -24,12 +24,16 @@ class Db(dict):
                 for d in data:
                     self[row[0]].update({ d[1] : d[2] })
 
-    def execute (self, cmd):
+    def cmdCheck(self, cmd):
         if cmd.tbl not in self:
             raise KeyError('{} not in database'.format(cmd.tbl))
         for k in cmd.kwargs:
             if k not in self[cmd.tbl]:
                 raise KeyError('{} is not a valid column of {}'.format(k, cmd.tbl))
+
+    def execute (self, cmd):
+        for c in cmd.cmds:
+            self.cmdCheck(c)
         return cmd.execute(self._c)
 
     def insert(self, tbl, **kwargs):
