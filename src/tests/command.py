@@ -137,7 +137,8 @@ class TestDb(unittest.TestCase):
     def test_deleteConditional(self):
         self.myDb.insert('test', id = 200)
         self.myDb.insert('test', id = 100)
-        self.myDb.delete('test', "id > 150")
+        deleteConditional = Delete('test', "id > 150")
+        self.myDb.execute(deleteConditional)
         rows = self.myDb.retrieve('test', "id > 150")
         self.assertIsNone(rows)
         rows = self.myDb.retrieve('test', "id <= 150")
