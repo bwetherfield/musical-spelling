@@ -88,7 +88,8 @@ class TestDb(unittest.TestCase):
         self.assertRaises(KeyError, self.myDb.execute, selectBadTable)
 
     def test_retrieveNoConditions(self):
-        rows = self.loadedDb.retrieve('retrieveTester')
+        selectNoConditions = Select('retrieveTester')
+        rows = self.loadedDb.execute(selectNoConditions)
         self.assertIsNotNone(rows)
         for row in rows:
             self.assertEqual(row[0], 1)
