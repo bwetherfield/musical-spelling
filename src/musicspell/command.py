@@ -26,7 +26,7 @@ class Insert(Command):
 
     def getString(self):
         if self._cmdStr is None:
-            tabStr = 'INTO {}'.format(self.tbl)
+            tabStr = ' INTO {}'.format(self.tbl)
             klist, wlist, qlist = [], [], []
             for k in self.kwargs.keys():
                 klist.append(k)
@@ -37,6 +37,7 @@ class Insert(Command):
             qs = ', '.join(qlist)
             self._cmdStr = tabStr + '({})'.format(ks) + 'VALUES' + \
                     '({})'.format(qs)
+            self._cmdStr = self._cmdType + self._cmdStr
             self._data = ws
         return self._cmdStr, self._data
 
@@ -47,7 +48,6 @@ class Insert(Command):
     def execute(self, cursor):
         self.errorCheck()
         cmd, data = self.getString()
-        cmd = self._cmdType + " " + cmd
         cursor.execute(cmd, data)
 
 class Select(Command):
@@ -80,7 +80,7 @@ class Update(Command):
     _cmdType = "UPDATE"
 
     def getString(self):
-        cmd = '{}'.format(self.tbl)
+        cmd = ' {}'.format(self.tbl)
         ksubs, wlist = [], []
         for k in self.kwargs.keys():
             ksubs.append('{} = ?'.format(k))
@@ -91,6 +91,7 @@ class Update(Command):
             conds = ' WHERE ' + ' AND '.join(self.conditions)
         else: conds = ''
         self._cmdStr = cmd + ks + conds
+        self._cmdStr = self._cmdType + self._cmdStr
         self._data = ws
         return self._cmdStr, self._data
 
@@ -101,7 +102,6 @@ class Update(Command):
     def execute(self, cursor):
         self.errorCheck()
         cmd, data = self.getString()
-        cmd = self._cmdType + " " + cmd
         cursor.execute(cmd, data)
 
 class Delete(Command):
@@ -111,14 +111,14 @@ class Delete(Command):
     _cmdType = "DELETE"
 
     def getString(self):
-        cmd = 'from {}'.format(self.tbl)
+        cmd = ' from {}'.format(self.tbl)
         self._cmdStr = cmd
         if self.conditions != ():
             cond = ' AND '.join(self.conditions)
             self._cmdStr = cmd + ' WHERE ' + cond
+        self._cmdStr = self._cmdType + self._cmdStr
         return self._cmdStr
 
     def execute(self, cursor):
         cmd = self.getString()
-        cmd = self._cmdType + " " + cmd
         cursor.execute(cmd)
