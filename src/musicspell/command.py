@@ -24,11 +24,11 @@ class Insert(Command):
 
     def getString(self):
         if self._cmdStr is None:
-            tabStr = 'INTO {}'.format(tbl)
+            tabStr = 'INTO {}'.format(self.tbl)
             klist, wlist, qlist = [], [], []
-            for k in kwargs.keys():
+            for k in self.kwargs.keys():
                 klist.append(k)
-                wlist.append(kwargs[k])
+                wlist.append(self.kwargs[k])
                 qlist.append('?')
             ks = ', '.join(klist)
             ws = tuple(wlist)
@@ -41,9 +41,9 @@ class Insert(Command):
     def errorCheck(self):
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
-        for k in kwargs:
-            if k not in db[tbl]:
-                raise KeyError('{} not in table {}'.format(k, tbl))
+        for k in self.kwargs:
+            if k not in db[self.tbl]:
+                raise KeyError('{} not in table {}'.format(k, self.tbl))
 
     def execute(self, cursor):
         self.errorCheck()
@@ -59,7 +59,7 @@ class Select(Command):
 
     def getString(self):
         if self._cmdStr is None:
-            cmd = '* from {}'.format(tbl)
+            cmd = '* from {}'.format(self.tbl)
             if self.conditions != ():
                 cond = ' AND '.join(self.conditions)
                 self._cmdStr = cmd + ' WHERE ' + cond
@@ -80,15 +80,15 @@ class Update(Command):
     self._cmdType = "UPDATE"
 
     def getString(self):
-        cmd = '{}'.format(tbl)
+        cmd = '{}'.format(self.tbl)
         ksubs, wlist = [], []
-        for k in kwargs.keys():
+        for k in self.kwargs.keys():
             ksubs.append('{} = ?'.format(k))
-            wlist.append(kwargs[k])
+            wlist.append(self.kwargs[k])
         ks = ' SET ' + ', '.join(ksubs)
         ws = tuple(wlist)
-        if conditions != ():
-            conds = ' WHERE ' + ' AND '.join(conditions)
+        if self.conditions != ():
+            conds = ' WHERE ' + ' AND '.join(self.conditions)
         else: conds = ''
         self._cmdStr = cmd + ks + conds
         self._data = ws
@@ -111,9 +111,9 @@ class Delete(Command):
     self._cmdType = "DELETE"
 
     def getString(self):
-        cmd = 'from {}'.format(tbl)
-        if conditions != ():
-            cond = ' AND '.join(conditions)
+        cmd = 'from {}'.format(self.tbl)
+        if self.conditions != ():
+            cond = ' AND '.join(self.conditions)
             self._cmdStr = cmd + ' WHERE ' + cond
 
     def execute(self, cursor):
