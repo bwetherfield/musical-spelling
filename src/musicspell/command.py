@@ -55,7 +55,7 @@ class Insert(Command):
     def execute(self, db=None):
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
-        db._c.execute(cmd, data)
+        db.execute(cmd, data)
 
 class Select(Command):
 
@@ -81,3 +81,35 @@ class Select(Command):
         rows = db._c.fetchall()
         if rows == []: return None
         else: return rows
+
+class Update(Command):
+
+    """concrete sql command UPDATE"""
+
+    self._cmdType = "UPDATE"
+
+    def getString(self):
+        cmd = '{}'.format(tbl)
+        ksubs, wlist = [], []
+        for k in kwargs.keys():
+            ksubs.append('{} = ?'.format(k))
+            wlist.append(kwargs[k])
+        ks = ' SET ' + ', '.join(ksubs)
+        ws = tuple(wlist)
+        if conditions != ():
+            conds = ' WHERE ' + ' AND '.join(conditions)
+        else: conds = ''
+        self._cmdStr = cmd + ks + conds
+        self._data = ws
+        return self._cmdStr, self._data
+
+    def errorCheck(self):
+        super.errorCheck()
+        if self.kwargs == {}:
+            raise ValueError('column, entry pairs needed to amend database')
+
+    def execute(self, db=None):
+        self.errorCheck()
+        cmd, data = self.getString()
+        cmd = self._cmdType + " " + cmd
+        db.execute(cmd, data)
