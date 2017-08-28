@@ -83,8 +83,9 @@ class TestDb(unittest.TestCase):
         insertEltNoKw = Insert('test')
         self.assertRaises(ValueError, self.myDb.execute, insertEltNoKw)
 
-    def test_retrieveBadTable(self):
-        self.assertRaises(KeyError, self.myDb.retrieve, 'nonTable')
+    def test_selectBadTable(self):
+        selectBadTable = Select('nonTable')
+        self.assertRaises(KeyError, self.myDb.execute, selectBadTable)
 
     def test_retrieveNoConditions(self):
         rows = self.loadedDb.retrieve('retrieveTester')
