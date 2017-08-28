@@ -26,7 +26,7 @@ class Db(dict):
 
     def execute (self, cmd):
         if cmd.tbl not in self:
-            raise KeyError('{} not in database'.format(tbl))
+            raise KeyError('{} not in database'.format(cmd.tbl))
         for k in cmd.kwargs:
             if k not in self[cmd.tbl]:
                 raise KeyError('{} is not a valid column of {}'.format(k, cmd.tbl))
