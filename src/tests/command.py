@@ -111,9 +111,10 @@ class TestDb(unittest.TestCase):
         updateEltBadTable = Update('nonTable', id=3)
         self.assertRaises(KeyError, self.myDb.execute, updateEltBadTable)
 
-    def test_amendElt(self):
+    def test_updateElt(self):
         self.myDb.insert('test', id=1)
-        self.myDb.amend('test', "id == 1", id=2)
+        updateElt = Update('test', "id == 1", id=2)
+        self.myDb.execute(updateElt)
         rows = self.myDb.retrieve('test', "id == 1")
         self.assertIsNone(rows)
 
