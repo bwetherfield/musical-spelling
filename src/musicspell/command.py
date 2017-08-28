@@ -39,7 +39,6 @@ class Insert(Command):
         return self._cmdStr, self._data
 
     def errorCheck(self):
-        super.errorCheck()
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
         for k in kwargs:
@@ -47,6 +46,7 @@ class Insert(Command):
                 raise KeyError('{} not in table {}'.format(k, tbl))
 
     def execute(self, cursor):
+        self.errorCheck()
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
         db.execute(cmd, data)
@@ -64,9 +64,6 @@ class Select(Command):
                 cond = ' AND '.join(self.conditions)
                 self._cmdStr = cmd + ' WHERE ' + cond
         return self._cmdStr
-
-    def errorCheck(self):
-        super.errorCheck()
 
     def execute(self, cursor):
         cmd = self.getString()
@@ -98,7 +95,6 @@ class Update(Command):
         return self._cmdStr, self._data
 
     def errorCheck(self):
-        super.errorCheck()
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
 
