@@ -3,9 +3,12 @@ from musicspell.command import Command, Insert, Select, Update, Delete
 import unittest
 import sqlite3
 
-class TestDb(unittest.TestCase):
+class TestCommand(unittest.TestCase):
 
-    """Db test class"""
+    """Command test class
+
+    Uses non-oo implementation of db to test the oo-style commands
+    """
 
     def setUp(self):
         #test db
