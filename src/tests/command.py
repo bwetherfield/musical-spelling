@@ -66,8 +66,8 @@ class TestDb(unittest.TestCase):
         self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
 
     def test_insertElt(self):
-        myInsert = Insert('test', id=200)
-        self.myDb.execute(myInsert)
+        insertElt = Insert('test', id=200)
+        self.myDb.execute(insertElt)
         rows = self.myDb.retrieve('test', 'id == 200')
         self.assertIsNotNone(rows)
 
