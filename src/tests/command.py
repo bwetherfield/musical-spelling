@@ -123,7 +123,8 @@ class TestDb(unittest.TestCase):
         self.assertRaises(ValueError, self.myDb.execute, updateNoKw)
 
     def test_deleteEltBadTable(self):
-        self.assertRaises(KeyError, self.myDb.delete, 'nonTable')
+        deleteEltBadTable = Delete('nonTable')
+        self.assertRaises(KeyError, self.myDb.execute, deleteEltBadTable)
 
     def test_deleteAll(self):
         self.myDb.insert('test', id=300)
