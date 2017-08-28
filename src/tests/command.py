@@ -107,8 +107,9 @@ class TestDb(unittest.TestCase):
         rows = self.loadedDb.execute(selectGoodConditions)
         self.assertIsNotNone(rows)
 
-    def test_amendEltBadTable(self):
-        self.assertRaises(KeyError, self.myDb.amend, 'nonTable', id=3)
+    def test_updateEltBadTable(self):
+        updateEltBadTable = Update('nonTable', id=3)
+        self.assertRaises(KeyError, self.myDb.execute, updateEltBadTable)
 
     def test_amendElt(self):
         self.myDb.insert('test', id=1)
