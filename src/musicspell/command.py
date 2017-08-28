@@ -4,7 +4,7 @@ class Command:
 
     """base sql command"""
 
-    self._cmdType = None
+    _cmdType = None
 
     def __init__(self, tbl, *conditions, **kwargs):
         self.tbl = tbl
@@ -20,7 +20,7 @@ class Insert(Command):
 
     """concrete sql command INSERT"""
 
-    self._cmdType = "INSERT"
+    _cmdType = "INSERT"
 
     def getString(self):
         if self._cmdStr is None:
@@ -52,7 +52,7 @@ class Select(Command):
 
     """concrete sql command SELECT"""
 
-    self._cmdType = "SELECT"
+    _cmdType = "SELECT"
 
     def getString(self):
         if self._cmdStr is None:
@@ -74,7 +74,7 @@ class Update(Command):
 
     """concrete sql command UPDATE"""
 
-    self._cmdType = "UPDATE"
+    _cmdType = "UPDATE"
 
     def getString(self):
         cmd = '{}'.format(self.tbl)
@@ -105,7 +105,7 @@ class Delete(Command):
 
     """concrete sql command DELETE"""
 
-    self._cmdType = "DELETE"
+    _cmdType = "DELETE"
 
     def getString(self):
         cmd = 'from {}'.format(self.tbl)

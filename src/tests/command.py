@@ -1,4 +1,5 @@
 from musicspell.db import Db
+from musicspell.command import Command, Insert, Select, Update, Delete
 import unittest
 import sqlite3
 
@@ -65,8 +66,8 @@ class TestDb(unittest.TestCase):
         self.assertRaises(TypeError, self.myDb.__setitem__, 'badTable', 'bad')
 
     def test_insertElt(self):
-        b = self.myDb.insert('test',id=200)
-        self.assertTrue(b)
+        myInsert = Insert('test', id=200)
+        myDb.execute(myInsert)
         rows = self.myDb.retrieve('test', 'id == 200')
         self.assertIsNotNone(rows)
 
