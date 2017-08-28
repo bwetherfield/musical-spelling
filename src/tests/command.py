@@ -67,7 +67,7 @@ class TestDb(unittest.TestCase):
 
     def test_insertElt(self):
         myInsert = Insert('test', id=200)
-        myDb.execute(myInsert)
+        self.myDb.execute(myInsert)
         rows = self.myDb.retrieve('test', 'id == 200')
         self.assertIsNotNone(rows)
 
