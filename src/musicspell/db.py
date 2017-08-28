@@ -25,6 +25,8 @@ class Db(dict):
                     self[row[0]].update({ d[1] : d[2] })
 
     def execute (self, cmd):
+        if cmd.tbl not in self:
+            raise KeyError('{} not in database'.format(tbl))
         return cmd.execute(self._c)
 
     def insert(self, tbl, **kwargs):

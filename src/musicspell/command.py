@@ -13,12 +13,6 @@ class Command:
         self._data = None
         self._cmdStr = None
 
-    def errorCheck(self, db=None):
-        if db is None:
-            raise ValueError('Supply a database')
-        elif self.tbl not in db:
-            raise KeyError('{} not in database'.format(tbl))
-
     def execute(self):
         raise NotImplementedError
 
@@ -52,7 +46,7 @@ class Insert(Command):
             if k not in db[tbl]:
                 raise KeyError('{} not in table {}'.format(k, tbl))
 
-    def execute(self, db=None):
+    def execute(self, cursor):
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
         db.execute(cmd, data)
@@ -74,7 +68,7 @@ class Select(Command):
     def errorCheck(self):
         super.errorCheck()
 
-    def execute(self, db=None):
+    def execute(self, cursor):
         cmd = self.getString()
         cmd = self._cmdType + " " + cmd
         db._c.execute(cmd)
@@ -108,8 +102,23 @@ class Update(Command):
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
 
-    def execute(self, db=None):
+    def execute(self, cursor):
         self.errorCheck()
         cmd, data = self.getString()
         cmd = self._cmdType + " " + cmd
-        db.execute(cmd, data)
+        cursor.execute(cmd, data)
+
+class Delete(Command):
+
+    """concrete sql command DELETE"""
+
+    self._cmdType = "DELETE"
+
+    def getString(self):
+        return "NOT DONE"
+
+    def errorCheck(self):
+        super.errorCheck()
+
+    def execute(self, cursor):
+        return
