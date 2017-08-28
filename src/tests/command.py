@@ -72,7 +72,8 @@ class TestDb(unittest.TestCase):
         self.assertIsNotNone(rows)
 
     def test_insertEltBadTable(self):
-        self.assertRaises(KeyError, self.myDb.insert, 'nonTable', id=2)
+        insertEltBadTable = Insert('nonTable', id=2)
+        self.assertRaises(KeyError, self.myDb.execute, insertEltBadTable)
 
     def test_insertEltBadColumn(self):
         self.assertRaises(KeyError, self.myDb.insert, 'test', nonColumn=2)
