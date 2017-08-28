@@ -19,9 +19,9 @@ class TestDb(unittest.TestCase):
         _tempCon.execute('CREATE TABLE testTable(id int, other text)')
         _tempCon.execute('DROP TABLE if exists testTable2')
         _tempCon.execute('CREATE TABLE testTable2(id int)')
-        _tempCon.execute('DROP TABLE if exists retrieveTester')
-        _tempCon.execute('CREATE TABLE retrieveTester(id int)')
-        _tempCon.execute('INSERT INTO retrieveTester VALUES (1)')
+        _tempCon.execute('DROP TABLE if exists selectTester')
+        _tempCon.execute('CREATE TABLE selectTester(id int)')
+        _tempCon.execute('INSERT INTO selectTester VALUES (1)')
         _tempCon.commit()
         _tempCon.close()
         self.loadedDb = Db('load')
@@ -87,10 +87,10 @@ class TestDb(unittest.TestCase):
         selectBadTable = Select('nonTable')
         self.assertRaises(KeyError, self.myDb.execute, selectBadTable)
 
-    def test_retrieveNoConditions(self):
-        selectNoConditions = Select('retrieveTester')
+    def test_selectNoConditions(self):
+        selectNoConditions = Select('selectTester')
         check = selectNoConditions.getString()
-        self.assertEqual(check, "* from retrieveTester", check)
+        self.assertEqual(check, "* from selectTester", check)
         rows = self.loadedDb.execute(selectNoConditions)
         self.assertIsNotNone(rows)
         for row in rows:
