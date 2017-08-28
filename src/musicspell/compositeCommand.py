@@ -17,4 +17,10 @@ class Union(CompositeCommand):
     _cmdType = "SELECT"
 
     def execute(self, cursor):
-        pass
+        cmdList = []
+        for c in self.cmds:
+            cmdList.append(c.getString())
+        s = ' UNION '.join(cmdList)
+        s = self._cmdType + s
+        cursor.execute(s)
+        return cursor.fetchall()
