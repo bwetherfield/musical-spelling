@@ -110,9 +110,11 @@ class Delete(Command):
 
     def getString(self):
         cmd = 'from {}'.format(self.tbl)
+        self._cmdStr = cmd
         if self.conditions != ():
             cond = ' AND '.join(self.conditions)
             self._cmdStr = cmd + ' WHERE ' + cond
+        return self._cmdStr
 
     def execute(self, cursor):
         cmd = self.getString()
