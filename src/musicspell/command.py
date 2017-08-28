@@ -57,6 +57,7 @@ class Select(Command):
     def getString(self):
         if self._cmdStr is None:
             cmd = '* from {}'.format(self.tbl)
+            self._cmdStr = cmd
             if self.conditions != ():
                 cond = ' AND '.join(self.conditions)
                 self._cmdStr = cmd + ' WHERE ' + cond

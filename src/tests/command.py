@@ -89,6 +89,8 @@ class TestDb(unittest.TestCase):
 
     def test_retrieveNoConditions(self):
         selectNoConditions = Select('retrieveTester')
+        check = selectNoConditions.getString()
+        self.assertEqual(check, "* from retrieveTester", check)
         rows = self.loadedDb.execute(selectNoConditions)
         self.assertIsNotNone(rows)
         for row in rows:
