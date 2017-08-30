@@ -29,6 +29,6 @@ class ChordBuilder(AbstractBuilder):
     def build_id(self):
         self._kw['id'] = self._m21c.id
 
-class DataScore:
+class Director:
     def buildEntry(self, builder):
         builder.build_id()

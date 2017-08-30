@@ -10,20 +10,20 @@ class TestBuilder(unittest.TestCase):
     """Db test class"""
 
     def setUp(self):
-        self.score = DataScore()
+        self.director = Director()
 
     def tearDown(self):
         pass
 
     def test_noteBuilder(self):
         noteBuilder = NoteBuilder('table', mn.Note())
-        self.score.buildEntry(noteBuilder)
+        self.director.buildEntry(noteBuilder)
         noteInsert = noteBuilder.getEntry()
         self.assertIsInstance(noteInsert, Insert)
 
     def test_chordBuilder(self):
         chordBuilder = ChordBuilder('table', mc.Chord())
-        self.score.buildEntry(chordBuilder)
+        self.director.buildEntry(chordBuilder)
         chordInsert = chordBuilder.getEntry()
         self.assertIsInstance(chordInsert, ManyCommand)
 
