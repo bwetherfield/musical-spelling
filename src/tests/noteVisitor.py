@@ -17,8 +17,7 @@ class TestVisitor(unittest.TestCase):
 
     def test_noteVisitor(self):
         self.score = DataScore()
-        noteVisitor = NoteBuilder('table', mn.Note())
-        self.assertRaises(KeyError, self.score.accept, noteVisitor)
+        self.assertRaises(KeyError, self.score.accept, 'table', mn.Note())
 
 if __name__ == "__main__":
     unittest.main()
