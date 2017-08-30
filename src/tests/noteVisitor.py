@@ -1,8 +1,6 @@
-from musicspell.noteBuilder import *
-from musicspell.command import Insert
+from musicspell.noteVisitor import DataScore
 import unittest
 import music21.note as mn
-import music21.chord as mc
 import sqlite3
 
 class TestVisitor(unittest.TestCase):
