@@ -27,7 +27,7 @@ class TestBuilder(unittest.TestCase):
         score = DataScore()
         score.buildEntry(chordBuilder)
         chordInsert = chordBuilder.getEntry()
-        self.assertIsInstance(chordInsert, Insert)
+        self.assertIsInstance(chordInsert, ManyCommand)
 
 if __name__ == "__main__":
     unittest.main()
