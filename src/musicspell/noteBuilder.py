@@ -1,6 +1,9 @@
 from musicspell.command import Insert
 from musicspell.compositeCommand import ManyCommand
 
+class AbstractBuilder:
+    def build_id(self): pass
+
 class NoteBuilder:
     def __init__(self, tbl,  m21n):
         self._tbl = tbl
