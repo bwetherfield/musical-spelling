@@ -15,7 +15,7 @@ class TestBuilder(unittest.TestCase):
         pass
 
     def test_noteBuilder(self):
-        noteBuilder = NoteBuilder(mn.Note())
+        noteBuilder = NoteBuilder('table', mn.Note())
         score = DataScore()
         score.buildEntry(noteBuilder)
         noteInsert = noteBuilder.getEntry()
