@@ -31,3 +31,12 @@ class Union(CompositeCommand):
         s = self.getString()
         cursor.execute(s)
         return cursor.fetchall()
+
+class ManyCommand(CompositeCommand):
+
+    """concrete class for a sequence of commands"""
+
+    def execute(self, cursor):
+        for c in self.cmds:
+            s = c.getString()
+            cursor.execute(s)

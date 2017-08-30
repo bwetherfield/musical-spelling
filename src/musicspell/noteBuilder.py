@@ -1,4 +1,5 @@
 from musicspell.command import Insert
+from musicspell.compositeCommand import ManyCommand
 
 class NoteBuilder:
     def __init__(self, tbl,  m21n):
@@ -19,7 +20,8 @@ class ChordBuilder:
         self._kw = {}
 
     def getEntry(self):
-        return Insert(self._tbl, self._kw)
+        idInsert = Insert(self._tbl, self._kw)
+        return ManyCommand(idInsert)
 
     def build_id(self):
         self._kw['id'] = self._m21c.id
