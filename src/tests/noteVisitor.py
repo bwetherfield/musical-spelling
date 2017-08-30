@@ -17,5 +17,9 @@ class TestVisitor(unittest.TestCase):
         self.score = DataScore()
         self.assertRaises(KeyError, self.score.accept, 'table', mn.Note())
 
+    def test_chordVisitor(self):
+        self.score = DataScore()
+        self.assertRaises(KeyError, self.score.accept, 'table', mc.Chord())
+
 if __name__ == "__main__":
     unittest.main()
