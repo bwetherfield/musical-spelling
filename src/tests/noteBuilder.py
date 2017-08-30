@@ -19,7 +19,7 @@ class TestBuilder(unittest.TestCase):
         score = DataScore()
         score.buildEntry(noteBuilder)
         noteInsert = noteBuilder.getEntry()
-        self.assertInstance(noteInsert, Insert)
+        self.assertIsInstance(noteInsert, Insert)
 
 if __name__ == "__main__":
     unittest.main()
