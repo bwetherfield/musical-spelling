@@ -4,7 +4,7 @@ import music21.note as mn
 import music21.chord as mc
 import sqlite3
 
-class TestVisitor(unittest.TestCase):
+class TestDatascore(unittest.TestCase):
 
     """Db test class"""
 

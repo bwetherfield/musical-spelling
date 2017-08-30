@@ -15,4 +15,3 @@ class DataScore:
         self.director.buildEntry(builder)
         newEntry = builder.getEntry()
         self.db.execute(newEntry)
-
