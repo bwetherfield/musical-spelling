@@ -21,5 +21,12 @@ class TestBuilder(unittest.TestCase):
         noteInsert = noteBuilder.getEntry()
         self.assertIsInstance(noteInsert, Insert)
 
+    def test_chordBuilder(self):
+        chordBuilder = ChordBuilder('table', mn.Chord())
+        score = DataScore()
+        score.buildEntry(chordBuilder)
+        chordInsert = chordBuilder.getEntry()
+        self.assertIsInstance(noteInsert, Insert)
+
 if __name__ == "__main__":
     unittest.main()
