@@ -1,12 +1,13 @@
 from musicspell.command import Insert
 
 class NoteBuilder:
-    def __init__(self, mn):
+    def __init__(self, tbl,  mn):
+        self._tbl = tbl
         self._mn = mn
         self._kw = {}
 
     def getEntry(self):
-        return Insert('table', self._kw)
+        return Insert(self._tbl, self._kw)
 
     def build_id(self):
         self._kw['id'] = self._mn.id
