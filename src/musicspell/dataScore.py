@@ -1,7 +1,6 @@
 """Music score object that uses database and entry-builders
 
 Todo:
-    * Add method docstrings
     * Rename accept as enter
 
 """
@@ -28,13 +27,12 @@ class DataScore:
         self.db = Db(name)
 
     def accept(self, tbl, scoreObj):
-        """
+        """Add supplied (non-sql-style) object to the database
 
         Args:
-          tbl: param scoreObj:
-          scoreObj: 
-
-        Returns:
+          tbl: database table to insert into
+          scoreObj: basis of row creation (:obj:`music21.note.Note` or
+              :obj:`music21.chord.Chord`)
 
         """
         if isinstance(scoreObj, music21.note.Note):
