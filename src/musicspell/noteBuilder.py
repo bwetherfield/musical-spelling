@@ -3,10 +3,9 @@ from musicspell.compositeCommand import ManyCommand
 
 class AbstractBuilder:
     """abstract database-entry builder
-    
+
     unimplemented methods do not raise exceptions so as to allow inheriting
     classes to pick and choose which parts to build
-
 
     """
 
@@ -14,9 +13,17 @@ class AbstractBuilder:
 
 class NoteBuilder(AbstractBuilder):
         """note database-entry builder
-        
-            use to build a row entry from a music21 note
 
+        use to build a row entry from a music21 note
+
+        Args:
+            tbl (str): name of table where entries will be inserted
+            m21n (:obj:`music21.note.Note): contains note information
+
+        Attributes:
+            _tbl (str): name of table where entries will be inserted
+            _m21n (:obj:`music21.note.Note): contains note information
+            _kw (dict): column, value pairs for entry in database
 
         """
 
@@ -26,7 +33,7 @@ class NoteBuilder(AbstractBuilder):
         self._kw = {}
 
     def getEntry(self):
-        """ """
+        """return sql :class:`musicspell.Insert` to insert into database"""
         return Insert(self._tbl, self._kw)
 
     def build_id(self):
@@ -35,9 +42,17 @@ class NoteBuilder(AbstractBuilder):
 
 class ChordBuilder(AbstractBuilder):
     """chord database-entry builder
-    
+
     use to build a row entry from a music21 chord
 
+    Args:
+        tbl (str): name of table where entries will be inserted
+        m21c (:obj:`music21.chord.Chord): contains chord information
+
+    Attributes:
+        _tbl (str): name of table where entries will be inserted
+        _m21c (:obj:`music21.chord.Chord): contains chord information
+        _kw (dict): column, value pairs for entry in database
 
     """
 
@@ -47,7 +62,7 @@ class ChordBuilder(AbstractBuilder):
         self._kw = {}
 
     def getEntry(self):
-        """ """
+        """return sql :class:`musicspell.Insert` to insert into database"""
         idInsert = Insert(self._tbl, self._kw)
         return ManyCommand(idInsert)
 
@@ -57,16 +72,17 @@ class ChordBuilder(AbstractBuilder):
 
 class Director:
     """Directs builders
-    
-    calls each build method for a specific builder
 
+    calls each build method for a specific builder
 
     """
 
     def buildEntry(self, builder):
-        """
+        """build method caller
 
-        :param builder: 
+        Args:
+            builder (:obj:`AbstractBuilder`): builder from which build methods
+            are called
 
         """
         builder.build_id()
