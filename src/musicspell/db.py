@@ -1,13 +1,31 @@
+"""Database handler module
+
+Implements interface to an sqlite3 database
+
+Todo:
+    * Implement KeyError exception for Amend method when a key in `kwargs` is not
+        a column of table `tbl`
+
+"""
+
 import sqlite3
 
 class Db(dict):
-    """database handler"""
+    """Database handler
+
+    Extends dict. Stores table name and column/type data as a dict.
+
+    Args:
+        name (str): name of .db file without suffix. Defaults to 'default'
+
+    Attributes:
+        _name (str): full name of .db file
+        _conn: sqlite3 connection
+        _c: sqlite3 cursor from _conn connection
+
+        """
 
     def __init__(self, name = 'default'):
-        """Connect to database with default name default.db
-
-        Argument: pass in name without .db suffix
-        Reads in table names and columns from pre-existing db automatically"""
         self._name = name + '.db'
         self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
@@ -24,9 +42,11 @@ class Db(dict):
                     self[row[0]].update({ d[1] : d[2] })
 
     def cmdCheck(self, cmd):
-        """
+        """Do database specific error checking on supplied command
 
-        :param cmd: 
+        Args:
+            cmd (:obj:`musicspell.Command`): command checked against this
+                database
 
         """
         if cmd.tbl not in self:
@@ -36,9 +56,16 @@ class Db(dict):
                 raise KeyError('{} is not a valid column of {}'.format(k, cmd.tbl))
 
     def execute (self, cmd):
-        """
+        """Execute supplied sql command in this database
 
-        :param cmd: 
+        cmd acts in a Visitor-like way.
+
+        Args:
+            cmd: sql command to be executed. (Works with
+                :class:`musicspell.Command` and :class:`musicspell.ManyCommand`
+                objects)
+
+        Returns (:obj:`sqlite3.Row`, optional): the return value passed from the command execution
 
         """
         for c in cmd.cmds:
@@ -48,8 +75,16 @@ class Db(dict):
     def insert(self, tbl, **kwargs):
         """Insert row into database
 
-        :param tbl: 
-        :param **kwargs: 
+        Args:
+            tbl: table to be inserted into
+            **kwargs: column, value pairs
+
+        Returns:
+            bool: True if successful
+
+        Raises:
+            ValueError: if `kwargs` is empty
+            KeyError: if a key in `kwargs` is not a column in table `tbl`
 
         """
         if kwargs == {}:
@@ -75,12 +110,21 @@ class Db(dict):
         else: raise KeyError('{} not in database'.format(tbl))
 
     def retrieve(self, tbl, *conditions):
-        """select rows that satisfy conditions from database
+        """Select row from database
 
-        :param tbl: 
-        :param *conditions: 
+        Args:
+            tbl: table to be inserted into
+            *conditions: retrieval conditions (sql)
+
+        Returns:
+            [:obj:`sqlite3.Row`], optional: returns matching rows or None if
+                there are none
+
+        Raises:
+            KeyError: If table `tbl` is not in the database
 
         """
+
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         sel = 'SELECT * from {}'.format(tbl)
@@ -95,9 +139,15 @@ class Db(dict):
     def amend(self, tbl, *conditions, **kwargs):
         """Update contents of rows that satisfy conditions in database
 
-        :param tbl: 
-        :param *conditions: 
-        :param **kwargs: 
+        Args:
+            tbl: table to update
+            *conditions: update where these conditions are met (sql)
+            **kwargs: column, value pairs to insert where conditions are met
+
+        Raises:
+            KeyError: if a key in `kwargs` is not a column in table `tbl`
+            KeyError: if table `tbl` is not in database
+            ValueError: if `kwargs` is empty
 
         """
         if tbl not in self:
@@ -120,8 +170,12 @@ class Db(dict):
     def delete(self, tbl, *conditions):
         """Delete rows  that satisfy conditions from database
 
-        :param tbl: 
-        :param *conditions: 
+        Args:
+          tbl: table to delete rows from
+          *conditions: delete rows for which these conditions are met (sql)
+
+        Raises:
+            KeyError: if table `tbl` is not in database
 
         """
         if tbl not in self:
