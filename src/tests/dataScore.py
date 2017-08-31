@@ -6,7 +6,7 @@ import sqlite3
 
 class TestDatascore(unittest.TestCase):
 
-    """Db test class"""
+    """(musical) score-database test class"""
 
     def setUp(self):
         pass

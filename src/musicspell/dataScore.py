@@ -3,6 +3,9 @@ from musicspell.db import Db
 import music21.note
 
 class DataScore:
+
+    """(musical) score abstraction on top of database"""
+
     def __init__(self, name='defaultScore'):
         self.director = Director()
         self.db = Db(name)
