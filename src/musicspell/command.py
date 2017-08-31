@@ -22,8 +22,8 @@ class Command:
         *conditions, optional: apply command to rows for which conditions are
             true
         **kwargs, optional: change rows with these column, value pairs
-        self._data: overridden attribute.
-        self._cmdStr: overridden attribute
+        _data: overridden attribute.
+        _cmdStr: overridden attribute
 
     """
 
