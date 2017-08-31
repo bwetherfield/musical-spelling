@@ -15,6 +15,7 @@ class Command:
         self._cmdStr = None
 
     def execute(self):
+        """ """
         raise NotImplementedError
 
 class Insert(Command):
@@ -23,6 +24,7 @@ class Insert(Command):
     _cmdType = "INSERT"
 
     def getString(self):
+        """ """
         if self._cmdStr is None:
             tabStr = ' INTO {}'.format(self.tbl)
             klist, wlist, qlist = [], [], []
@@ -40,10 +42,16 @@ class Insert(Command):
         return self._cmdStr, self._data
 
     def errorCheck(self):
+        """ """
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
 
     def execute(self, cursor):
+        """
+
+        :param cursor: 
+
+        """
         self.errorCheck()
         cmd, data = self.getString()
         cursor.execute(cmd, data)
@@ -54,6 +62,7 @@ class Select(Command):
     _cmdType = "SELECT"
 
     def getString(self):
+        """ """
         if self._cmdStr is None:
             cmd = ' * from {}'.format(self.tbl)
             self._cmdStr = cmd
@@ -64,6 +73,11 @@ class Select(Command):
         return self._cmdStr
 
     def execute(self, cursor):
+        """
+
+        :param cursor: 
+
+        """
         cmd = self.getString()
         cursor.execute(cmd)
         rows = cursor.fetchall()
@@ -76,6 +90,7 @@ class Update(Command):
     _cmdType = "UPDATE"
 
     def getString(self):
+        """ """
         cmd = ' {}'.format(self.tbl)
         ksubs, wlist = [], []
         for k in self.kwargs.keys():
@@ -92,10 +107,16 @@ class Update(Command):
         return self._cmdStr, self._data
 
     def errorCheck(self):
+        """ """
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
 
     def execute(self, cursor):
+        """
+
+        :param cursor: 
+
+        """
         self.errorCheck()
         cmd, data = self.getString()
         cursor.execute(cmd, data)
@@ -106,6 +127,7 @@ class Delete(Command):
     _cmdType = "DELETE"
 
     def getString(self):
+        """ """
         cmd = ' from {}'.format(self.tbl)
         self._cmdStr = cmd
         if self.conditions != ():
@@ -115,5 +137,10 @@ class Delete(Command):
         return self._cmdStr
 
     def execute(self, cursor):
+        """
+
+        :param cursor: 
+
+        """
         cmd = self.getString()
         cursor.execute(cmd)
