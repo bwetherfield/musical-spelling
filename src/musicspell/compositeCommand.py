@@ -1,5 +1,4 @@
 class CompositeCommand:
-
     """base sql composite command"""
 
     _cmdType = None
@@ -12,7 +11,6 @@ class CompositeCommand:
         raise NotImplementedError
 
 class Union(CompositeCommand):
-
     """concrete sql command UNION"""
 
     _cmdType = "SELECT"
@@ -33,7 +31,6 @@ class Union(CompositeCommand):
         return cursor.fetchall()
 
 class ManyCommand(CompositeCommand):
-
     """concrete class for a sequence of commands"""
 
     def execute(self, cursor):

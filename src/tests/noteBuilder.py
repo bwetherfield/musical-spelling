@@ -6,7 +6,6 @@ import music21.chord as mc
 import sqlite3
 
 class TestBuilder(unittest.TestCase):
-
     """database-entry builder test class"""
 
     def setUp(self):

@@ -1,7 +1,6 @@
 import sqlite3
 
 class Db(dict):
-
     """database handler"""
 
     def __init__(self, name = 'default'):
@@ -119,4 +118,3 @@ class Db(dict):
         """Commit database changes and close database before deletion"""
         self._conn.commit()
         self._conn.close()
-

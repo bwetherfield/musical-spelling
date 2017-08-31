@@ -4,7 +4,6 @@ import unittest
 import sqlite3
 
 class TestCommand(unittest.TestCase):
-
     """Command test class
 
     Uses non-oo implementation of db to test the oo-style commands

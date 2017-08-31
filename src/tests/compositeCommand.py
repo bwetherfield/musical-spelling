@@ -5,7 +5,6 @@ import unittest
 import sqlite3
 
 class TestCompositeCommand(unittest.TestCase):
-
     """CompositeCommand test class"""
 
     def setUp(self):

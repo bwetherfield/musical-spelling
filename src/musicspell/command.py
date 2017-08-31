@@ -1,7 +1,6 @@
 from musicspell.db import Db
 
 class Command:
-
     """base sql command"""
 
     _cmdType = None
@@ -19,7 +18,6 @@ class Command:
         raise NotImplementedError
 
 class Insert(Command):
-
     """concrete sql command INSERT"""
 
     _cmdType = "INSERT"
@@ -51,7 +49,6 @@ class Insert(Command):
         cursor.execute(cmd, data)
 
 class Select(Command):
-
     """concrete sql command SELECT"""
 
     _cmdType = "SELECT"
@@ -74,7 +71,6 @@ class Select(Command):
         else: return rows
 
 class Update(Command):
-
     """concrete sql command UPDATE"""
 
     _cmdType = "UPDATE"
@@ -105,7 +101,6 @@ class Update(Command):
         cursor.execute(cmd, data)
 
 class Delete(Command):
-
     """concrete sql command DELETE"""
 
     _cmdType = "DELETE"

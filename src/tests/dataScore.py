@@ -5,7 +5,6 @@ import music21.chord as mc
 import sqlite3
 
 class TestDatascore(unittest.TestCase):
-
     """(musical) score-database test class"""
 
     def setUp(self):

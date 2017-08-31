@@ -3,7 +3,6 @@ import unittest
 import sqlite3
 
 class TestDb(unittest.TestCase):
-
     """Db test class"""
 
     def setUp(self):
