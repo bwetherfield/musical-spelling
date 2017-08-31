@@ -1,3 +1,10 @@
+bin/pyment
+pyment/
+src/musicspell/command.py.patch
+src/musicspell/compositeCommand.py.patch
+src/musicspell/db.py.patch
+src/musicspell/db.py.rej
+
 *.swo
 *.db
 
