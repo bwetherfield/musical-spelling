@@ -24,6 +24,11 @@ class Db(dict):
                     self[row[0]].update({ d[1] : d[2] })
 
     def cmdCheck(self, cmd):
+        """
+
+        :param cmd: 
+
+        """
         if cmd.tbl not in self:
             raise KeyError('{} not in database'.format(cmd.tbl))
         for k in cmd.kwargs:
@@ -31,12 +36,22 @@ class Db(dict):
                 raise KeyError('{} is not a valid column of {}'.format(k, cmd.tbl))
 
     def execute (self, cmd):
+        """
+
+        :param cmd: 
+
+        """
         for c in cmd.cmds:
             self.cmdCheck(c)
         return cmd.execute(self._c)
 
     def insert(self, tbl, **kwargs):
-        """Insert row into database"""
+        """Insert row into database
+
+        :param tbl: 
+        :param **kwargs: 
+
+        """
         if kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
         if tbl in self:
@@ -60,7 +75,12 @@ class Db(dict):
         else: raise KeyError('{} not in database'.format(tbl))
 
     def retrieve(self, tbl, *conditions):
-        """select rows that satisfy conditions from database"""
+        """select rows that satisfy conditions from database
+
+        :param tbl: 
+        :param *conditions: 
+
+        """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         sel = 'SELECT * from {}'.format(tbl)
@@ -73,7 +93,13 @@ class Db(dict):
         else: return rows
 
     def amend(self, tbl, *conditions, **kwargs):
-        """Update contents of rows that satisfy conditions in database"""
+        """Update contents of rows that satisfy conditions in database
+
+        :param tbl: 
+        :param *conditions: 
+        :param **kwargs: 
+
+        """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         if kwargs == {}:
@@ -92,7 +118,12 @@ class Db(dict):
         self._c.execute(upd, ws)
 
     def delete(self, tbl, *conditions):
-        """Delete rows  that satisfy conditions from database"""
+        """Delete rows  that satisfy conditions from database
+
+        :param tbl: 
+        :param *conditions: 
+
+        """
         if tbl not in self:
             raise KeyError('{} not in database'.format(tbl))
         dels = 'DELETE from {}'.format(tbl)
