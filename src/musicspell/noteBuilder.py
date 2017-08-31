@@ -1,20 +1,28 @@
+"""Create music-based database rows in a Builder-like way
+
+Todo:
+    * Add build methods for each column of the desired table structure
+
+"""
 from musicspell.command import Insert
 from musicspell.compositeCommand import ManyCommand
 
 class AbstractBuilder:
-    """abstract database-entry builder
+    """Abstract database-entry builder
 
-    unimplemented methods do not raise exceptions so as to allow inheriting
+    Unimplemented methods do not raise exceptions so as to allow inheriting
     classes to pick and choose which parts to build
 
     """
 
-    def build_id(self): pass
+    def build_id(self):
+        """Empty overridable method"""
+        pass
 
 class NoteBuilder(AbstractBuilder):
-        """note database-entry builder
+        """Note database-entry builder
 
-        use to build a row entry from a music21 note
+        Use to build a row entry from a music21 note
 
         Args:
             tbl (str): name of table where entries will be inserted
@@ -37,7 +45,7 @@ class NoteBuilder(AbstractBuilder):
         return Insert(self._tbl, self._kw)
 
     def build_id(self):
-        """ """
+        """build row element id"""
         self._kw['id'] = self._m21n.id
 
 class ChordBuilder(AbstractBuilder):
@@ -67,13 +75,13 @@ class ChordBuilder(AbstractBuilder):
         return ManyCommand(idInsert)
 
     def build_id(self):
-        """ """
+        """build row element id"""
         self._kw['id'] = self._m21c.id
 
 class Director:
     """Directs builders
 
-    calls each build method for a specific builder
+    Calls each build method for a specific builder
 
     """
 
