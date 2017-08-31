@@ -2,6 +2,7 @@
 
 Todo:
     * Add method docstrings
+    * Rename accept as enter
 
 """
 from musicspell.noteBuilder import Director, NoteBuilder, ChordBuilder
