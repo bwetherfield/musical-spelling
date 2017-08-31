@@ -7,7 +7,7 @@ import sqlite3
 
 class TestBuilder(unittest.TestCase):
 
-    """Db test class"""
+    """database-entry builder test class"""
 
     def setUp(self):
         self.director = Director()
