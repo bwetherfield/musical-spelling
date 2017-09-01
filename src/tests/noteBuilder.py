@@ -14,17 +14,17 @@ class TestBuilder(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_noteBuilder(self):
-        noteBuilder = NoteBuilder('table', mn.Note())
-        self.director.buildEntry(noteBuilder)
-        noteInsert = noteBuilder.getEntry()
-        self.assertIsInstance(noteInsert, Insert)
+    def test_note_builder(self):
+        note_builder = NoteBuilder('table', mn.Note())
+        self.director.build_entry(note_builder)
+        note_insert = note_builder.get_entry()
+        self.assertIsInstance(note_insert, Insert)
 
-    def test_chordBuilder(self):
-        chordBuilder = ChordBuilder('table', mc.Chord())
-        self.director.buildEntry(chordBuilder)
-        chordInsert = chordBuilder.getEntry()
-        self.assertIsInstance(chordInsert, ManyCommand)
+    def test_chord_builder(self):
+        chord_builder = ChordBuilder('table', mc.Chord())
+        self.director.build_entry(chord_builder)
+        chord_insert = chord_builder.get_entry()
+        self.assertIsInstance(chord_insert, ManyCommand)
 
 if __name__ == "__main__":
     unittest.main()
