@@ -40,7 +40,7 @@ class NoteBuilder(AbstractBuilder):
         self._m21n = m21n
         self._kw = {}
 
-    def getEntry(self):
+    def get_entry(self):
         """return sql :class:`musicspell.Insert` to insert into database"""
         return Insert(self._tbl, self._kw)
 
@@ -69,7 +69,7 @@ class ChordBuilder(AbstractBuilder):
         self._m21c = m21c
         self._kw = {}
 
-    def getEntry(self):
+    def get_entry(self):
         """return sql :class:`musicspell.Insert` to insert into database"""
         idInsert = Insert(self._tbl, self._kw)
         return ManyCommand(idInsert)
@@ -85,7 +85,7 @@ class Director:
 
     """
 
-    def buildEntry(self, builder):
+    def build_entry(self, builder):
         """build method caller
 
         Args:
