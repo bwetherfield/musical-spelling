@@ -5,7 +5,7 @@ Todo:
 
 """
 from musicspell.command import Insert
-from musicspell.compositeCommand import ManyCommand
+from musicspell.compositecommand import ManyCommand
 
 class AbstractBuilder:
     """Abstract database-entry builder
