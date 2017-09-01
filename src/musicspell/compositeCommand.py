@@ -1,6 +1,9 @@
 """Composite-Like object-oriented imlementation of bundled groups of sql
 commands that are called by databases in a Visitor-like way
 
+Todo:
+    Change module name to lowercase
+
 """
 class CompositeCommand:
     """base sql composite command
