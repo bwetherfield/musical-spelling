@@ -14,7 +14,7 @@ class Command:
         **kwargs, optional: change rows with these column, value pairs
 
     Attributes:
-        _cmdType: overridden attribute
+        _cmd_type: overridden attribute
         cmds: list containing self. This accommodates
             :method:`musicspell.db.Db.checkCmd` which checks commands contained
             in its parameter objects
@@ -23,11 +23,11 @@ class Command:
             true
         **kwargs, optional: change rows with these column, value pairs
         _data: overridden attribute.
-        _cmdStr: overridden attribute
+        _cmd_str: overridden attribute
 
     """
 
-    _cmdType = None
+    _cmd_type = None
 
     def __init__(self, tbl, *conditions, **kwargs):
         #hack for Command/CompositeCommand polymorphism
@@ -36,7 +36,7 @@ class Command:
         self.conditions = conditions
         self.kwargs = kwargs
         self._data = None
-        self._cmdStr = None
+        self._cmd_str = None
 
     def execute(self):
         """virtual method"""
@@ -46,22 +46,22 @@ class Insert(Command):
     """concrete sql command INSERT. Extends `Command`.
 
     Attributes:
-        _cmdType: "INSERT". Overrides :attribute:`Command._cmdType`
+        _cmd_type: "INSERT". Overrides :attribute:`Command._cmd_type`
 
     """
 
-    _cmdType = "INSERT"
+    _cmd_type = "INSERT"
 
-    def getString(self):
+    def get_string(self):
         """Getter for explicit sql command and parameters
 
-        Overrides `_data` to hold sql paramaters and `_cmdStr` to hold sql command.
+        Overrides `_data` to hold sql paramaters and `_cmd_str` to hold sql command.
 
         Returns:
             (str, str): tuple containing sql string and parameters
 
         """
-        if self._cmdStr is None:
+        if self._cmd_str is None:
             tabStr = ' INTO {}'.format(self.tbl)
             klist, wlist, qlist = [], [], []
             for k in self.kwargs.keys():
@@ -71,13 +71,13 @@ class Insert(Command):
             ks = ', '.join(klist)
             ws = tuple(wlist)
             qs = ', '.join(qlist)
-            self._cmdStr = tabStr + '({})'.format(ks) + 'VALUES' + \
+            self._cmd_str = tabStr + '({})'.format(ks) + 'VALUES' + \
                     '({})'.format(qs)
-            self._cmdStr = self._cmdType + self._cmdStr
+            self._cmd_str = self._cmd_type + self._cmd_str
             self._data = ws
-        return self._cmdStr, self._data
+        return self._cmd_str, self._data
 
-    def errorCheck(self):
+    def error_check(self):
         """command-specific error checking"""
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
@@ -91,30 +91,30 @@ class Insert(Command):
             cursor: :obj:`sqlite3.Cursor` from database where the command is executed
 
         """
-        self.errorCheck()
-        cmd, data = self.getString()
+        self.error_check()
+        cmd, data = self.get_string()
         cursor.execute(cmd, data)
 
 class Select(Command):
     """concrete sql command SELECT. Extends `Command`.
 
     Attributes:
-        _cmdType: "SELECT". Overrides :attribute:`Command._cmdType`
+        _cmd_type: "SELECT". Overrides :attribute:`Command._cmd_type`
 
     """
 
-    _cmdType = "SELECT"
+    _cmd_type = "SELECT"
 
-    def getString(self):
+    def get_string(self):
         """Getter for explicit sql command"""
-        if self._cmdStr is None:
+        if self._cmd_str is None:
             cmd = ' * from {}'.format(self.tbl)
-            self._cmdStr = cmd
+            self._cmd_str = cmd
             if self.conditions != ():
                 cond = ' AND '.join(self.conditions)
-                self._cmdStr = cmd + ' WHERE ' + cond
-            self._cmdStr = self._cmdType + self._cmdStr
-        return self._cmdStr
+                self._cmd_str = cmd + ' WHERE ' + cond
+            self._cmd_str = self._cmd_type + self._cmd_str
+        return self._cmd_str
 
     def execute(self, cursor):
         """Execute sql command
@@ -130,7 +130,7 @@ class Select(Command):
                 nonesuch
 
         """
-        cmd = self.getString()
+        cmd = self.get_string()
         cursor.execute(cmd)
         rows = cursor.fetchall()
         if rows == []: return None
@@ -140,16 +140,16 @@ class Update(Command):
     """concrete sql command UPDATE. Extends `Command`.
 
     Attributes:
-        _cmdType: "UPDATE". Overrides :attribute:`Command._cmdType`
+        _cmd_type: "UPDATE". Overrides :attribute:`Command._cmd_type`
 
     """
 
-    _cmdType = "UPDATE"
+    _cmd_type = "UPDATE"
 
-    def getString(self):
+    def get_string(self):
         """Getter for explicit sql command and parameters
 
-        Overrides `_data` to hold sql paramaters and `_cmdStr` to hold sql command.
+        Overrides `_data` to hold sql paramaters and `_cmd_str` to hold sql command.
 
         Returns:
             (str, str): tuple containing sql string and parameters
@@ -165,12 +165,12 @@ class Update(Command):
         if self.conditions != ():
             conds = ' WHERE ' + ' AND '.join(self.conditions)
         else: conds = ''
-        self._cmdStr = cmd + ks + conds
-        self._cmdStr = self._cmdType + self._cmdStr
+        self._cmd_str = cmd + ks + conds
+        self._cmd_str = self._cmd_type + self._cmd_str
         self._data = ws
-        return self._cmdStr, self._data
+        return self._cmd_str, self._data
 
-    def errorCheck(self):
+    def error_check(self):
         """command-specific error checking"""
         if self.kwargs == {}:
             raise ValueError('column, entry pairs needed to amend database')
@@ -184,29 +184,29 @@ class Update(Command):
             cursor: :obj:`sqlite3.Cursor` from database where the command is executed
 
         """
-        self.errorCheck()
-        cmd, data = self.getString()
+        self.error_check()
+        cmd, data = self.get_string()
         cursor.execute(cmd, data)
 
 class Delete(Command):
     """concrete sql command DELETE. Extends `Command`.
 
     Attributes:
-        _cmdType: "DELETE". Overrides :attribute:`Command._cmdType`
+        _cmd_type: "DELETE". Overrides :attribute:`Command._cmd_type`
 
     """
 
-    _cmdType = "DELETE"
+    _cmd_type = "DELETE"
 
-    def getString(self):
+    def get_string(self):
         """Getter for explicit sql command"""
         cmd = ' from {}'.format(self.tbl)
-        self._cmdStr = cmd
+        self._cmd_str = cmd
         if self.conditions != ():
             cond = ' AND '.join(self.conditions)
-            self._cmdStr = cmd + ' WHERE ' + cond
-        self._cmdStr = self._cmdType + self._cmdStr
-        return self._cmdStr
+            self._cmd_str = cmd + ' WHERE ' + cond
+        self._cmd_str = self._cmd_type + self._cmd_str
+        return self._cmd_str
 
     def execute(self, cursor):
         """Execute sql command
@@ -217,5 +217,5 @@ class Delete(Command):
             cursor: :obj:`sqlite3.Cursor` from database where the command is executed
 
         """
-        cmd = self.getString()
+        cmd = self.get_string()
         cursor.execute(cmd)
