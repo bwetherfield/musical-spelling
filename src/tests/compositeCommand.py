@@ -8,32 +8,32 @@ class TestCompositeCommand(unittest.TestCase):
     """CompositeCommand test class"""
 
     def setUp(self):
-        self.unionDb = Db('unionDb')
-        self.unionDb['unionTable'] = dict(id = 'INTEGER')
-        self.unionDb['unionTable2'] = dict(id = 'INTEGER')
-        rowInsert = Insert('unionTable', id=1)
-        rowInsert2 = Insert('unionTable2', id=2)
-        self.unionDb.execute(rowInsert)
-        self.unionDb.execute(rowInsert2)
+        self.union_db = Db('unionDb')
+        self.union_db['unionTable'] = dict(id = 'INTEGER')
+        self.union_db['unionTable2'] = dict(id = 'INTEGER')
+        row_insert = Insert('unionTable', id=1)
+        row_insert2 = Insert('unionTable2', id=2)
+        self.union_db.execute(row_insert)
+        self.union_db.execute(row_insert2)
 
     def tearDown(self):
-        del self.unionDb
+        del self.union_db
 
-    def test_unionNotACommand(self):
+    def test_union_not_a_command(self):
         self.assertNotIsInstance(Union(), Command)
 
-    def test_unionOneSelect(self):
-        oneSelect = Select('unionTable', "id == 1")
-        unionOneSelect = Union(oneSelect)
-        rows = self.unionDb.execute(unionOneSelect)
+    def test_union_one_select(self):
+        one_select = Select('unionTable', "id == 1")
+        union_one_select = Union(one_select)
+        rows = self.union_db.execute(union_one_select)
         self.assertIsNotNone(rows)
 
-    def test_unionTwoSelect(self):
-        selectOne = Select('unionTable')
-        selectTwo = Select('unionTable2')
-        unionTwoSelect = Union(selectOne, selectTwo)
-        rows = self.unionDb.execute(unionTwoSelect)
-        self.assertEqual(len(rows), 2, msg=unionTwoSelect.getString() )
+    def test_union_two_select(self):
+        select_one = Select('unionTable')
+        select_two = Select('unionTable2')
+        union_two_select = Union(select_one, select_two)
+        rows = self.union_db.execute(union_two_select)
+        self.assertEqual(len(rows), 2, msg=union_two_select.get_string() )
 
 if __name__ == "__main__":
     unittest.main()
