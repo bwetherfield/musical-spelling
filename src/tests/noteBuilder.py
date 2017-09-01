@@ -1,4 +1,5 @@
-from musicspell.noteBuilder import *
+from musicspell.noteBuilder import NoteBuilder, ChordBuilder, Director
+from musicspell.compositeCommand import ManyCommand
 from musicspell.command import Insert
 import unittest
 import music21.note as mn
