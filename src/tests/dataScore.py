@@ -13,11 +13,11 @@ class TestDatascore(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_noteVisitor(self):
+    def test_note_visitor(self):
         self.score = DataScore()
         self.assertRaises(KeyError, self.score.accept, 'table', mn.Note())
 
-    def test_chordVisitor(self):
+    def test_chord_visitor(self):
         self.score = DataScore()
         self.assertRaises(KeyError, self.score.accept, 'table', mc.Chord())
 
