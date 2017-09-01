@@ -26,19 +26,19 @@ class DataScore:
         self.director = Director()
         self.db = Db(name)
 
-    def accept(self, tbl, scoreObj):
+    def accept(self, tbl, score_obj):
         """Add supplied (non-sql-style) object to the database
 
         Args:
           tbl: database table to insert into
-          scoreObj: basis of row creation (:obj:`music21.note.Note` or
+          score_obj: basis of row creation (:obj:`music21.note.Note` or
               :obj:`music21.chord.Chord`)
 
         """
-        if isinstance(scoreObj, music21.note.Note):
-            builder = NoteBuilder(tbl, scoreObj)
+        if isinstance(score_obj, music21.note.Note):
+            builder = NoteBuilder(tbl, score_obj)
         else:
-            builder = ChordBuilder(tbl, scoreObj)
+            builder = ChordBuilder(tbl, score_obj)
         self.director.buildEntry(builder)
-        newEntry = builder.getEntry()
-        self.db.execute(newEntry)
+        new_entry = builder.getEntry()
+        self.db.execute(new_entry)
