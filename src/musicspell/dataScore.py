@@ -2,6 +2,7 @@
 
 Todo:
     * Rename accept as enter
+    * Change module name to lowercase
 
 """
 from musicspell.noteBuilder import Director, NoteBuilder, ChordBuilder
