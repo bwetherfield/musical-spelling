@@ -5,7 +5,7 @@ Todo:
     * Change module name to lowercase
 
 """
-from musicspell.noteBuilder import Director, NoteBuilder, ChordBuilder
+from musicspell.notebuilder import Director, NoteBuilder, ChordBuilder
 from musicspell.db import Db
 import music21.note
 
