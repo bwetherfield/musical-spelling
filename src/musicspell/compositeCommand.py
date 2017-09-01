@@ -10,15 +10,15 @@ class CompositeCommand:
 
     Attributes:
         cmds: list of commands handled by object
-        _cmdStr: overridden attribute.
+        _cmd_str: overridden attribute.
 
     """
 
-    _cmdType = None
+    _cmd_type = None
 
     def __init__(self, *cmds):
         self.cmds = cmds
-        self._cmdStr = None
+        self._cmd_str = None
 
     def execute(self):
         """virtual method"""
@@ -28,22 +28,22 @@ class Union(CompositeCommand):
     """concrete sql command UNION. Extends `CompositeCommand`.
 
     Attributes:
-        _cmdType: "SELECT". Overrides :attribute:`CompositeCommand._cmdType`
+        _cmd_type: "SELECT". Overrides :attribute:`CompositeCommand._cmd_type`
 
     """
 
-    _cmdType = "SELECT"
+    _cmd_type = "SELECT"
 
-    def getString(self):
+    def get_string(self):
         """Getter for explicit sql command."""
-        if self._cmdStr is None:
-            cmdList = []
+        if self._cmd_str is None:
+            cmd_list = []
             for c in self.cmds:
-                sc = c.getString()
-                cmdList.append(sc)
-            s = ' UNION '.join(cmdList)
-            self._cmdStr = s
-        return self._cmdStr
+                sc = c.get_string()
+                cmd_list.append(sc)
+            s = ' UNION '.join(cmd_list)
+            self._cmd_str = s
+        return self._cmd_str
 
     def execute(self, cursor):
         """Execute sql all the contained commands
@@ -59,7 +59,7 @@ class Union(CompositeCommand):
                 nonesuch
 
         """
-        s = self.getString()
+        s = self.get_string()
         cursor.execute(s)
         return cursor.fetchall()
 
@@ -80,5 +80,5 @@ class ManyCommand(CompositeCommand):
 
         """
         for c in self.cmds:
-            s = c.getString()
+            s = c.get_string()
             cursor.execute(s)
