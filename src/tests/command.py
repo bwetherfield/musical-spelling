@@ -145,4 +145,4 @@ class TestCommand(unittest.TestCase):
         self.assertIsNotNone(rows)
 
 if __name__ == "__main__":
-    unittestkmain()
+    unittest.main()
