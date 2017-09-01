@@ -20,20 +20,20 @@ class AbstractBuilder:
         pass
 
 class NoteBuilder(AbstractBuilder):
-        """Note database-entry builder
+    """Note database-entry builder
 
-        Use to build a row entry from a music21 note
+    Use to build a row entry from a music21 note
 
-        Args:
-            tbl (str): name of table where entries will be inserted
-            m21n (:obj:`music21.note.Note): contains note information
+    Args:
+    tbl (str): name of table where entries will be inserted
+    m21n (:obj:`music21.note.Note): contains note information
 
-        Attributes:
-            _tbl (str): name of table where entries will be inserted
-            _m21n (:obj:`music21.note.Note): contains note information
-            _kw (dict): column, value pairs for entry in database
+    Attributes:
+    _tbl (str): name of table where entries will be inserted
+    _m21n (:obj:`music21.note.Note): contains note information
+    _kw (dict): column, value pairs for entry in database
 
-        """
+    """
 
     def __init__(self, tbl,  m21n):
         self._tbl = tbl
