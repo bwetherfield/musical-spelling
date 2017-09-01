@@ -41,7 +41,7 @@ class Db(dict):
                 for d in data:
                     self[row[0]].update({ d[1] : d[2] })
 
-    def cmdCheck(self, cmd):
+    def cmd_check(self, cmd):
         """Do database specific error checking on supplied command
 
         Args:
@@ -69,7 +69,7 @@ class Db(dict):
 
         """
         for c in cmd.cmds:
-            self.cmdCheck(c)
+            self.cmd_check(c)
         return cmd.execute(self._c)
 
     def insert(self, tbl, **kwargs):
