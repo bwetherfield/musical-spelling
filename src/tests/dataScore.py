@@ -1,4 +1,4 @@
-from musicspell.noteVisitor import DataScore
+from musicspell.dataScore import DataScore
 import unittest
 import music21.note as mn
 import music21.chord as mc
