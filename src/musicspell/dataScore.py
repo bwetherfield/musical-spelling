@@ -40,6 +40,6 @@ class DataScore:
             builder = NoteBuilder(tbl, score_obj)
         else:
             builder = ChordBuilder(tbl, score_obj)
-        self.director.buildEntry(builder)
-        new_entry = builder.getEntry()
+        self.director.build_entry(builder)
+        new_entry = builder.get_entry()
         self.db.execute(new_entry)
