@@ -1,4 +1,4 @@
 {
-  "src/musicspell/*.py": {"alternate": "src/tests/{}.py"},
-  "src/tests/*.py": {"alternate": "src/musicspell/{}.py"}
+  "src/musicspell/*.py": {"alternate": "tests/{}.py"},
+  "tests/*.py": {"alternate": "src/musicspell/{}.py"}
 }
