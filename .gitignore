@@ -4,6 +4,8 @@ src/musicspell/command.py.patch
 src/musicspell/compositeCommand.py.patch
 src/musicspell/db.py.patch
 src/musicspell/db.py.rej
+src/musicspell/dataScore.py.patch
+src/musicspell/noteBuilder.py.patch
 
 *.swo
 *.db
