@@ -5,8 +5,8 @@ Todo:
     * Change module name to lowercase
 
 """
-from musicspell.notebuilder import Director, NoteBuilder, ChordBuilder
-from musicspell.db import Db
+from src.musicspell.notebuilder import Director, NoteBuilder, ChordBuilder
+from src.musicspell.db import Db
 import music21.note
 
 class DataScore:

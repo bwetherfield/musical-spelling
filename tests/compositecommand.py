@@ -1,6 +1,6 @@
-from musicspell.db import Db
-from musicspell.command import Select, Insert, Command
-from musicspell.compositecommand import Union
+from src.musicspell.db import Db
+from src.musicspell.command import Select, Insert, Command
+from src.musicspell.compositecommand import Union
 import unittest
 import sqlite3
 

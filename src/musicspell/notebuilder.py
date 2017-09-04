@@ -4,8 +4,8 @@ Todo:
     * Add build methods for each column of the desired table structure
 
 """
-from musicspell.command import Insert
-from musicspell.compositecommand import ManyCommand
+from src.musicspell.command import Insert
+from src.musicspell.compositecommand import ManyCommand
 
 class AbstractBuilder:
     """Abstract database-entry builder

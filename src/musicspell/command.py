@@ -2,7 +2,7 @@
 in a Visitor-like way
 
 """
-from musicspell.db import Db
+from src.musicspell.db import Db
 
 class Command:
     """base sql command

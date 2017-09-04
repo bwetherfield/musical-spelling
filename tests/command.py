@@ -1,5 +1,5 @@
-from musicspell.db import Db
-from musicspell.command import Command, Insert, Select, Update, Delete
+from src.musicspell.db import Db
+from src.musicspell.command import Command, Insert, Select, Update, Delete
 import unittest
 import sqlite3
 

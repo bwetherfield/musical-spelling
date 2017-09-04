@@ -1,4 +1,4 @@
-from musicspell.db import Db
+from src.musicspell.db import Db
 import unittest
 import sqlite3
 
