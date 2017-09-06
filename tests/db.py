@@ -12,7 +12,7 @@ class TestDb(unittest.TestCase):
         # named db
         self.named_db = Db('named')
         # loaded db
-        _temp_con = sqlite3.connect('load.db')
+        _temp_con = sqlite3.connect('src/sql/load.db')
         _temp_con.execute('DROP TABLE if exists testTable')
         _temp_con.execute('CREATE TABLE testTable(id int, other text)')
         _temp_con.execute('DROP TABLE if exists testTable2')

@@ -26,7 +26,7 @@ class Db(dict):
         """
 
     def __init__(self, name = 'default'):
-        self._name = name + '.db'
+        self._name = 'src/sql/' + name + '.db'
         self._conn = sqlite3.connect(self._name)
         self._c = self._conn.cursor()
 
