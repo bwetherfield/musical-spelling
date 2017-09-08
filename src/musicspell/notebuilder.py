@@ -46,7 +46,15 @@ class NoteBuilder(AbstractBuilder):
 
     def build_id(self):
         """build row element id"""
-        self._kw['id'] = self._m21n.id
+        self._kw['event_id'] = self._m21n.id
+
+    def build_location(self):
+        """build location in score"""
+        self._kw['location'] = self._m21n.offset
+
+    def build_duration(self):
+        self._kw['duration'] = self._m21n.duration.quarterLength
+
 
 class ChordBuilder(AbstractBuilder):
     """chord database-entry builder
