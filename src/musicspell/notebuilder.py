@@ -19,6 +19,14 @@ class AbstractBuilder:
         """Empty overridable method"""
         pass
 
+    def build_location(self):
+        """Empty overridable method"""
+        pass
+
+    def build_duration(self):
+        """Empty overridable method"""
+        pass
+
 class NoteBuilder(AbstractBuilder):
     """Note database-entry builder
 
@@ -35,7 +43,7 @@ class NoteBuilder(AbstractBuilder):
 
     """
 
-    def __init__(self, tbl,  m21n):
+    def __init__(self, tbl="Events",  m21n):
         self._tbl = tbl
         self._m21n = m21n
         self._kw = {}
@@ -72,7 +80,7 @@ class ChordBuilder(AbstractBuilder):
 
     """
 
-    def __init__(self, tbl,  m21c):
+    def __init__(self, tbl="Events",  m21c):
         self._tbl = tbl
         self._m21c = m21c
         self._kw = {}
@@ -85,6 +93,13 @@ class ChordBuilder(AbstractBuilder):
     def build_id(self):
         """build row element id"""
         self._kw['id'] = self._m21c.id
+
+    def build_location(self):
+        """build location in score"""
+        self._kw['location'] = self._m21c.offset
+
+    def build_duration(self):
+        self._kw['duration'] = self._m21c.duration.quarterLength
 
 class Director:
     """Directs builders
@@ -102,3 +117,5 @@ class Director:
 
         """
         builder.build_id()
+        builder.build_location()
+        builder.build_duration()
