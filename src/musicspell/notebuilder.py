@@ -35,18 +35,23 @@ class NoteBuilder(AbstractBuilder):
     Args:
     tbl (str): name of table where entries will be inserted
     m21n (:obj:`music21.note.Note): contains note information
+    score_obj (:obj:`musicspell.command.ObservedInsert`): score to point to in
+        the database structure
 
     Attributes:
     _tbl (str): name of table where entries will be inserted
     _m21n (:obj:`music21.note.Note): contains note information
     _kw (dict): column, value pairs for entry in database
+    score_obj (:obj:`musicspell.command.ObservedInsert`): score to point to in
+        the database structure. Observed by the entry builder (this).
 
     """
 
-    def __init__(self, tbl="Events",  m21n):
+    def __init__(self, tbl="Events",  m21n, score_obj):
         self._tbl = tbl
         self._m21n = m21n
         self._kw = {}
+        self._score = score_obj
 
     def get_entry(self):
         """return sql :class:`musicspell.Insert` to insert into database"""
@@ -61,8 +66,15 @@ class NoteBuilder(AbstractBuilder):
         self._kw['location'] = self._m21n.offset
 
     def build_duration(self):
+        """build duration of event"""
         self._kw['duration'] = self._m21n.duration.quarterLength
 
+    def build_score_ptr(self):
+        self._score.attach(self)
+
+    def _update(self):
+        """Update score_id reference immediately after score-insert has been executed"""
+        self._kw['score_id'] = self._score.get_id()
 
 class ChordBuilder(AbstractBuilder):
     """chord database-entry builder
@@ -119,3 +131,4 @@ class Director:
         builder.build_id()
         builder.build_location()
         builder.build_duration()
+        builder.build_score_ptr()
