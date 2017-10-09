@@ -1,18 +1,16 @@
-set ID;
-set PITCHNUM;
-set SHARP_OR_DOUB;
+set NODE_CLASSES;
+set node {NODE_CLASSES};
+set NODES = union {p in NODE_CLASSES} node[p];
+set EDGES within {NODES, NODES}
 
-param EdgeWeight {ID, PITCHNUM, SHARP_OR_DOUB, ID, PITCHNUM, SHARP_OR_DOUB} >= 0, <= 100;
+param EdgeWeight {p in NODE_CLASSES, q in NODE_CLASSES} >= 0, <= 100;
+param BigM;
 
-var Indicator {ID, PITCHNUM, SHARP_OR_DOUB} >= 0, <= 1;
-var Edge {ID, PITCHNUM, SHARP_OR_DOUB, ID, PITCHNUM, SHARP_OR_DOUB} >= 0, <= 1;
+var NodeState {NODES} >= 0, <= 1;
+var EdgeState {EDGES} >= 0, <= 1;
 
 minimize Total_Cost:
-		sum {i1 in ID, p1 in PITCHNUM, s1 in SHARP_OR_DOUB, i2 in ID, p2 in PITCHNUM, s2 in SHARP_OR_DOUB}
-				EdgeWeight[i1,p1,s1,i2,p2,s2] * Edge[i1,p1,s1,i2,p2,s2];
+		sum {p in NODE_CLASSES, q in NODE_CLASSES, i in node[p], j in node[q]: i <> j} EdgeWeight[p,q] * EdgeState[i,j];
 
-subject to Include1 {i1 in ID, p1 in PITCHNUM, s1 in SHARP_OR_DOUB, i2 in ID, p2 in PITCHNUM, s2 in SHARP_OR_DOUB}:
-		Indicator[i1,p1,s1] - Indicator[i2,p2,s1] <= Edge[i1,p1,s1,i2,p2,s2];
-
-subject to Include2 {i1 in ID, p1 in PITCHNUM, s1 in SHARP_OR_DOUB, i2 in ID, p2 in PITCHNUM, s2 in SHARP_OR_DOUB}:
-		Indicator[i2,p2,s1] - Indicator[i1,p1,s1] <= Edge[i1,p1,s1,i2,p2,s2];
+subject to StateTransfer {i in NODES, j in NODES: (i,j) in EDGES}:
+		NodeState[j] - NodeState[i] <= EdgeState[i,j];
