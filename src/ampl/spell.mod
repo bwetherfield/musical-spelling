@@ -5,8 +5,8 @@ set EDGES within {NODES, NODES};
 
 param EdgeWeight {p in NODE_CLASSES, q in NODE_CLASSES} >= 0, <= 100;
 
-var NodeState {NODES} >= 0, <= 1;
-var EdgeState {EDGES} >= 0, <= 1;
+var NodeState {NODES} >= 0;
+var EdgeState {EDGES} >= 0;
 
 minimize Total_Cost:
 		sum {p in NODE_CLASSES, q in NODE_CLASSES, i in node[p], j in node[q]: i <> j} EdgeWeight[p,q] * EdgeState[i,j];
