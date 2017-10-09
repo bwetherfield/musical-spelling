@@ -1,5 +1,5 @@
 set NODE_CLASSES;
-set nodes {NODE_CLASSES} dimen 2;
+set nodes {NODE_CLASSES} dimen 3;
 set NODES = union {i in NODE_CLASSES} nodes[i];
 set EDGES within {NODES, NODES};
 
