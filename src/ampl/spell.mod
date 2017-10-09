@@ -4,7 +4,6 @@ set NODES = union {p in NODE_CLASSES} node[p];
 set EDGES within {NODES, NODES}
 
 param EdgeWeight {p in NODE_CLASSES, q in NODE_CLASSES} >= 0, <= 100;
-param BigM;
 
 var NodeState {NODES} >= 0, <= 1;
 var EdgeState {EDGES} >= 0, <= 1;
