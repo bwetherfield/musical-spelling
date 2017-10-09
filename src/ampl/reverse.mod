@@ -34,4 +34,4 @@ subject to Distance2 {e in EDGES, f in EDGES: e <> f}:
 		Distance[e,f] >= Capacity[f] - Capacity[e];
 
 subject to Bound_Distance {e in EDGES, f in EDGES: e <> f}:
-		Min_Distance <= Distance[e,f]
+		Min_Distance <= Distance[e,f];
