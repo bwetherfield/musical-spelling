@@ -1,15 +1,15 @@
 set NODE_CLASSES;
 set node {NODE_CLASSES};
-set NODES = union {p in NODE_CLASSES} node[p];
+set NODES = union {i in NODE_CLASSES} node[i];
 set EDGES within {NODES, NODES};
 
-param EdgeWeight {p in NODE_CLASSES, q in NODE_CLASSES} >= 0, <= 100;
+param EdgeWeight {i in NODE_CLASSES, j in NODE_CLASSES} >= 0, <= 100;
 
 var NodeState {NODES} >= 0;
 var EdgeState {EDGES} >= 0;
 
 minimize Total_Cost:
-		sum {p in NODE_CLASSES, q in NODE_CLASSES, i in node[p], j in node[q]: i <> j} EdgeWeight[p,q] * EdgeState[i,j];
+		sum {i in NODE_CLASSES, j in NODE_CLASSES, u in node[i], v in node[j]: u <> v} EdgeWeight[i,j] * EdgeState[u,v];
 
-subject to StateTransfer {i in NODES, j in NODES: (i,j) in EDGES}:
-		NodeState[j] - NodeState[i] <= EdgeState[i,j];
+subject to StateTransfer {u in NODES, v in NODES: (u,v) in EDGES}:
+		NodeState[v] - NodeState[u] <= EdgeState[u,v];
