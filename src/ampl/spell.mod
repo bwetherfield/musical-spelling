@@ -1,7 +1,7 @@
 set NODE_CLASSES;
 set node {NODE_CLASSES};
 set NODES = union {p in NODE_CLASSES} node[p];
-set EDGES within {NODES, NODES}
+set EDGES within {NODES, NODES};
 
 param EdgeWeight {p in NODE_CLASSES, q in NODE_CLASSES} >= 0, <= 100;
 
