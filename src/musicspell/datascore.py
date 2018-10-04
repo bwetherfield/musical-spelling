@@ -16,7 +16,7 @@ class DataScore:
             Defaults to 'defaultScore'
 
     Attributes:
-        director (:class:`musicspell.noteBuilder.Director): directs row
+        director (:class:`musicspell.noteBuilder.Director`): directs row
             creation
         db: :mod:`sqlite3` database which stores note from musical score
 
